@@ -32,7 +32,7 @@ export default function Navbar() {
             <span className="font-display text-[14px] leading-none text-white tracking-[-0.02em]" style={{ paddingTop: '1px' }}>ia</span>
           </span>
           <span className="font-display text-[17px] tracking-[-0.02em] text-[var(--color-text)] group-hover:text-[var(--color-secondary)] transition-colors">
-            Integrating Agents
+            Integrated Agents
           </span>
         </a>
 
