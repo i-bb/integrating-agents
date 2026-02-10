@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import CircuitGrid from './components/CircuitGrid'
@@ -26,8 +26,25 @@ function HomeContent() {
         <span className="text-[var(--color-secondary)]">AI-native.</span>
       </h1>
       <p className="mt-6 text-[14px] sm:text-[15px] text-white/50 leading-[1.7] max-w-md">
-        AI strategy, transformation, and engineering deployed at startup speed.
+        The cost of intelligence is approaching zero. The companies that rewire around it now will dominate the next decade. The rest will be disrupted.
       </p>
+      <p className="mt-3 text-[14px] sm:text-[15px] text-white/50 leading-[1.7] max-w-md">
+        We set and execute your enterprise AI strategy at startup speed. No 200-slide decks. No 6-month timelines. Just business impact.
+      </p>
+      <div className="flex gap-6 mt-8">
+        <div>
+          <p className="text-[1.5rem] font-black text-[var(--color-secondary)] leading-none">25%</p>
+          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">cost reduction</p>
+        </div>
+        <div>
+          <p className="text-[1.5rem] font-black text-[var(--color-tertiary)] leading-none">3x</p>
+          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">shipping velocity</p>
+        </div>
+        <div>
+          <p className="text-[1.5rem] font-black text-[var(--color-accent-bright)] leading-none">&lt;90d</p>
+          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">to measurable ROI</p>
+        </div>
+      </div>
     </div>
   )
 }
@@ -36,47 +53,47 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
   const content = {
     strategy: {
       title: 'AI Strategy',
-      tagline: 'Clarity before code.',
-      desc: 'We audit every function, surface the highest-ROI AI use cases, and hand you a roadmap your team can execute tomorrow.',
+      tagline: 'No 200-slide decks. No 6-month timelines.',
+      desc: 'We run 30, 60, or 90-day audits across every function in your business, surface the highest-ROI AI use cases, quantify the impact, and hand you an execution roadmap your team can run with tomorrow.',
       metrics: [
-        { value: '4-6w', label: 'audit timeline', color: 'var(--color-secondary)' },
-        { value: '20+', label: 'use cases surfaced', color: 'var(--color-tertiary)' },
+        { value: '30-90d', label: 'audit to roadmap', color: 'var(--color-secondary)' },
+        { value: '20+', label: 'use cases ranked', color: 'var(--color-tertiary)' },
         { value: '100%', label: 'execution-ready', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Function-Specific Audits', desc: 'Every department. Every workflow. Every opportunity.' },
-        { title: 'ROI-Ranked Use Cases', desc: 'Prioritized by business impact and feasibility score.' },
-        { title: 'Execution Roadmap', desc: 'Run it yourself or hand it back to us.' },
+        { title: 'Holistic Audits', desc: 'Every department, every workflow, every bottleneck. We find the money.' },
+        { title: 'ROI-Quantified Use Cases', desc: 'Ranked by business impact and implementation feasibility. No guesswork.' },
+        { title: 'AI Adoption Report', desc: 'A crisp deliverable with technical appendix. Run it yourself or hand it back to us.' },
       ],
     },
     transformation: {
       title: 'AI Transformation',
       tagline: 'Product. Process. People.',
-      desc: 'We embed with your team to deploy AI across your entire operation, with baseline metrics tracking ROI from day one.',
+      desc: 'We become your Chief AI Officer. Embed with your team, deploy AI across your entire operation, track baseline metrics from day one, and make sure your people actually adopt it.',
       metrics: [
-        { value: '25%', label: 'efficiency gain', color: 'var(--color-secondary)' },
-        { value: 'D1', label: 'baseline metrics', color: 'var(--color-tertiary)' },
-        { value: 'E2E', label: 'implementation', color: 'var(--color-accent-bright)' },
+        { value: '25%', label: 'cost reduction', color: 'var(--color-secondary)' },
+        { value: 'Day 1', label: 'baseline metrics', color: 'var(--color-tertiary)' },
+        { value: 'E2E', label: 'strategy to execution', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Custom AI Tooling', desc: 'Bespoke solutions built for your specific workflows.' },
-        { title: 'Change Management', desc: 'Upskill your people. Transform the culture.' },
-        { title: 'Continuous ROI Tracking', desc: 'Measurable outcomes, not theoretical projections.' },
+        { title: 'Process Automation', desc: 'We are bomb-sniffing dogs for inefficiency. Find bottlenecks. Fix them. Put money back in your pocket.' },
+        { title: 'Custom AI Tooling', desc: 'Off-the-shelf where it works, custom-built where it matters. Deployed into your existing stack.' },
+        { title: 'People Upskilling', desc: 'Bespoke curricula and hands-on workshops that get your teams thinking AI-first. Adoption is the real ROI.' },
       ],
     },
     engineering: {
       title: 'AI Engineering',
-      tagline: 'Ship faster. Pay for output.',
-      desc: 'Elite engineering squads leveraging AI-accelerated workflows. Subscription-style pods that deliver production-grade software.',
+      tagline: 'Pay for output, not hours.',
+      desc: 'Outcome-based engineering pods that ship production-grade software at 3x velocity. World-class engineers who use AI as a force multiplier. You pay for features delivered, not hours logged.',
       metrics: [
         { value: '3x', label: 'shipping velocity', color: 'var(--color-secondary)' },
-        { value: 'Pod', label: 'dedicated team', color: 'var(--color-tertiary)' },
+        { value: '2wk', label: 'sprint cycles', color: 'var(--color-tertiary)' },
         { value: '$0/hr', label: 'outcome pricing', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Dedicated Engineering Pods', desc: 'PM + engineers integrated into your stack.' },
-        { title: 'Sprint-Based Delivery', desc: 'You choose priorities. We ship features.' },
-        { title: 'AI-Accelerated Workflows', desc: '10x engineers powered by cutting-edge AI tooling.' },
+        { title: 'Dedicated Pods', desc: 'PM + forward-deployed engineers integrated into your stack, Slack, and sprint tracker.' },
+        { title: 'Full-Stack Delivery', desc: 'Applications, model fine-tuning, data engineering, agentic solutions, code migrations.' },
+        { title: 'Aligned Incentives', desc: 'We pay our team on story points completed. Everyone is aligned on output and speed.' },
       ],
     },
   }
@@ -187,13 +204,132 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   )
 }
 
+const HOVER_DURATION = 10
+
+function NavButton({ item, isActive, onActivate }: {
+  item: { id: View; title: string; desc: string }
+  isActive: boolean
+  onActivate: (id: View) => void
+}) {
+  const [hovering, setHovering] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleEnter = useCallback(() => {
+    if (isActive) return
+    setHovering(true)
+    timerRef.current = setTimeout(() => {
+      onActivate(item.id)
+      setHovering(false)
+    }, HOVER_DURATION * 1000)
+  }, [isActive, item.id, onActivate])
+
+  const handleLeave = useCallback(() => {
+    setHovering(false)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }, [])
+
+  return (
+    <button
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      onClick={() => {
+        handleLeave()
+        onActivate(isActive ? 'home' as View : item.id)
+      }}
+      className={`relative text-left px-5 py-5 sm:px-6 sm:py-6 transition-all cursor-pointer flex-1 md:flex-initial overflow-hidden ${
+        isActive
+          ? 'bg-[var(--color-btn-active)] card-pop-active text-white'
+          : 'bg-white card-pop hover:translate-y-[-1px]'
+      }`}
+    >
+      {!isActive && (
+        <div
+          className="absolute inset-0 bg-[var(--color-btn-active)] origin-left"
+          style={{
+            transform: hovering ? 'scaleX(1)' : 'scaleX(0)',
+            transition: hovering ? `transform ${HOVER_DURATION}s linear` : 'transform 0.25s ease-out',
+          }}
+        />
+      )}
+      <div className="relative z-10">
+        <p className={`text-[15px] sm:text-[17px] font-bold leading-tight transition-colors ${
+          isActive ? 'text-white' : hovering ? 'text-white' : 'text-[var(--color-text)]'
+        }`} style={{ transitionDuration: hovering ? `${HOVER_DURATION * 0.3}s` : '0.25s' }}>
+          {item.title}
+        </p>
+        <p className={`text-[13px] sm:text-[14px] leading-[1.5] mt-2 transition-colors ${
+          isActive ? 'text-white/70' : hovering ? 'text-white/70' : 'text-[var(--color-text-secondary)]'
+        }`} style={{ transitionDuration: hovering ? `${HOVER_DURATION * 0.3}s` : '0.25s' }}>
+          {item.desc}
+        </p>
+      </div>
+    </button>
+  )
+}
+
+function CtaButton({ isActive, onActivate }: { isActive: boolean; onActivate: () => void }) {
+  const [hovering, setHovering] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleEnter = useCallback(() => {
+    if (isActive) return
+    setHovering(true)
+    timerRef.current = setTimeout(() => {
+      onActivate()
+      setHovering(false)
+    }, HOVER_DURATION * 1000)
+  }, [isActive, onActivate])
+
+  const handleLeave = useCallback(() => {
+    setHovering(false)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }, [])
+
+  return (
+    <button
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      onClick={() => { handleLeave(); onActivate() }}
+      className={`text-left px-5 py-5 sm:px-6 sm:py-6 transition-all cursor-pointer flex-1 md:flex-initial ${
+        isActive
+          ? 'bg-[var(--color-btn-active)] card-pop-active text-white'
+          : 'bg-white card-pop hover:translate-y-[-1px]'
+      }`}
+    >
+      <p className={`text-[11px] sm:text-[12px] font-medium tracking-[0.12em] uppercase mb-2 ${
+        isActive ? 'text-white/60' : 'text-[var(--color-text-secondary)]'
+      }`}>
+        integrateagents.ai
+      </p>
+      <p className={`text-[17px] sm:text-[19px] font-black leading-tight tracking-[-0.01em] ${
+        isActive ? 'text-white' : 'text-[var(--color-text)]'
+      }`}>
+        Get Started
+      </p>
+      <div
+        className={`mt-3 h-[1px] ${isActive ? 'bg-white/20 w-full' : 'bg-[var(--color-accent)]'}`}
+        style={!isActive ? {
+          width: hovering ? '100%' : '32px',
+          transition: hovering ? `width ${HOVER_DURATION}s linear` : 'width 0.25s ease-out',
+        } : undefined}
+      />
+    </button>
+  )
+}
+
 export default function App() {
   const [view, setView] = useState<View>('home')
 
   const navItems: { id: View; title: string; desc: string }[] = [
-    { id: 'strategy', title: 'Strategy', desc: 'AI audits and execution-ready roadmaps' },
-    { id: 'transformation', title: 'Transformation', desc: 'End-to-end AI deployment with ROI' },
-    { id: 'engineering', title: 'Engineering', desc: 'Elite pods shipping production software' },
+    { id: 'strategy', title: 'Strategy', desc: 'Surface the highest-ROI AI use cases in 90 days or less' },
+    { id: 'transformation', title: 'Transformation', desc: 'Rewire your product, process, and people around AI' },
+    { id: 'engineering', title: 'Engineering', desc: 'Ship 3x faster with outcome-priced engineering pods' },
   ]
 
   return (
@@ -218,61 +354,21 @@ export default function App() {
           </div>
 
           {/* Right panel: nav column */}
-          <div className="w-full md:w-[260px] lg:w-[300px] flex flex-row md:flex-col gap-2 sm:gap-2.5 flex-shrink-0 min-h-0 md:min-h-full">
-            {navItems.map((item) => {
-              const isActive = view === item.id
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setView(isActive ? 'home' : item.id)}
-                  className={`text-left px-4 py-3 sm:px-5 sm:py-4 transition-all cursor-pointer flex-1 md:flex-initial ${
-                    isActive
-                      ? 'bg-[var(--color-accent-light)] card-pop-active text-white'
-                      : 'bg-white card-pop hover:translate-y-[-1px]'
-                  }`}
-                >
-                  <p className={`text-[13px] sm:text-[14px] font-bold leading-tight ${
-                    isActive ? 'text-white' : 'text-[var(--color-text)]'
-                  }`}>
-                    {item.title}
-                  </p>
-                  <p className={`text-[10px] sm:text-[11px] leading-[1.4] mt-1 sm:mt-1.5 ${
-                    isActive ? 'text-white/60' : 'text-[var(--color-text-secondary)]'
-                  }`}>
-                    {item.desc}
-                  </p>
-                </button>
-              )
-            })}
+          <div className="w-full md:w-[300px] lg:w-[340px] flex flex-row md:flex-col gap-2 sm:gap-2.5 flex-shrink-0 min-h-0 md:min-h-full">
+            {navItems.map((item) => (
+              <NavButton
+                key={item.id}
+                item={item}
+                isActive={view === item.id}
+                onActivate={setView}
+              />
+            ))}
 
             {/* Spacer: only on desktop */}
             <div className="hidden md:block flex-1" />
 
             {/* CTA */}
-            <button
-              onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
-              className={`group text-left px-4 py-3 sm:px-5 sm:py-5 transition-all cursor-pointer flex-1 md:flex-initial ${
-                view === 'contact'
-                  ? 'bg-[var(--color-accent-light)] card-pop-active text-white'
-                  : 'bg-white card-pop hover:translate-y-[-1px]'
-              }`}
-            >
-              <p className={`text-[9px] sm:text-[10px] font-medium tracking-[0.12em] uppercase mb-1 sm:mb-2 ${
-                view === 'contact' ? 'text-white/50' : 'text-[var(--color-text-secondary)]'
-              }`}>
-                integrateagents.ai
-              </p>
-              <p className={`text-[14px] sm:text-[16px] font-black leading-tight tracking-[-0.01em] ${
-                view === 'contact' ? 'text-white' : 'text-[var(--color-text)]'
-              }`}>
-                Get Started
-              </p>
-              <div className={`mt-2 sm:mt-2.5 h-[1px] transition-all duration-300 ${
-                view === 'contact'
-                  ? 'bg-white/20 w-full'
-                  : 'bg-[var(--color-accent)] w-8 group-hover:w-full'
-              }`} />
-            </button>
+            <CtaButton isActive={view === 'contact'} onActivate={() => setView(view === 'contact' ? 'home' : 'contact')} />
           </div>
         </div>
       </div>

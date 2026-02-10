@@ -6,11 +6,11 @@
   --color-surface-elevated: #F4F4F0;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-highlight: rgba(0, 0, 0, 0.16);
-  --color-accent: #1A3A6B;
-  --color-accent-hover: #2B4F7F;
-  --color-accent-muted: rgba(26, 58, 107, 0.08);
-  --color-accent-bright: #4A7BBA;
-  --color-accent-light: #2E5A94;
+  --color-accent: #2E5A94;
+  --color-accent-hover: #3B6BA6;
+  --color-accent-muted: rgba(46, 90, 148, 0.08);
+  --color-accent-bright: #5B8CC5;
+  --color-btn-active: #1A3A6B;
   --color-secondary: #B8922E;
   --color-secondary-hover: #D4A853;
   --color-secondary-muted: rgba(184, 146, 46, 0.08);
@@ -60,14 +60,14 @@
 
 .card-pop {
   box-shadow:
-    3px 3px 0 0 rgba(0, 0, 0, 0.10),
-    6px 6px 0 0 rgba(0, 0, 0, 0.05),
-    8px 8px 0 0 rgba(0, 0, 0, 0.02);
+    4px 4px 0 0 rgba(0, 0, 0, 0.18),
+    8px 8px 0 0 rgba(0, 0, 0, 0.10),
+    12px 12px 0 0 rgba(0, 0, 0, 0.05);
 }
 
 .card-pop-active {
   box-shadow:
-    2px 2px 0 0 rgba(0, 0, 0, 0.12),
-    5px 5px 0 0 rgba(0, 0, 0, 0.06),
-    7px 7px 0 0 rgba(0, 0, 0, 0.03);
+    3px 3px 0 0 rgba(0, 0, 0, 0.20),
+    7px 7px 0 0 rgba(0, 0, 0, 0.12),
+    10px 10px 0 0 rgba(0, 0, 0, 0.06);
 }
