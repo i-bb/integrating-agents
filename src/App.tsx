@@ -118,7 +118,7 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
 
       <div className="flex flex-col sm:flex-row gap-2.5 mb-6">
         {c.metrics.map((m, i) => (
-          <div key={i} className="flex-1 border border-white/10 bg-white/5 p-3">
+          <div key={i} className="flex-1 border border-white/10 bg-white/5 p-3 card-inner">
             <p className="text-[1.3rem] font-black leading-none" style={{ color: m.color }}>{m.value}</p>
             <p className="text-[10px] text-white/40 mt-1 uppercase tracking-wider">{m.label}</p>
           </div>
@@ -127,7 +127,7 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
 
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
         {c.capabilities.map((cap, i) => (
-          <div key={i} className="border border-white/10 bg-white/5 p-3 flex flex-col">
+          <div key={i} className="border border-white/10 bg-white/5 p-3 flex flex-col card-inner">
             <div className="w-5 h-0.5 mb-2.5" style={{ backgroundColor: i === 0 ? 'var(--color-secondary)' : i === 1 ? 'var(--color-tertiary)' : 'var(--color-accent-bright)' }} />
             <p className="text-[13px] font-bold text-white mb-1">{cap.title}</p>
             <p className="text-[11px] text-white/50 leading-[1.6]">{cap.desc}</p>
@@ -146,12 +146,12 @@ function ContactContent({ onBack }: { onBack: () => void }) {
     await new Promise(r => setTimeout(r, 600))
     setSent(true)
   }
-  const input = 'w-full border border-white/15 bg-white/5 px-3 py-2.5 text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors'
+  const input = 'w-full border border-white/15 bg-white/5 px-3 py-2.5 text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors card-inner'
 
   if (sent) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
-        <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4">
+        <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4 card-inner">
           <svg className="w-5 h-5 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h3 className="text-[1.3rem] font-bold text-white">We'll be in touch.</h3>
@@ -196,7 +196,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
           <textarea {...register('needs', { required: true })} className={`${input} h-full min-h-[80px] resize-none`} placeholder="What challenges are you facing? *" />
           {errors.needs && <p className="mt-1 text-[10px] text-[var(--color-tertiary)]">Required</p>}
         </div>
-        <button type="submit" disabled={isSubmitting} className="w-full py-3 text-[14px] font-bold bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] transition-colors disabled:opacity-60 cursor-pointer tracking-wide">
+        <button type="submit" disabled={isSubmitting} className="w-full py-3 text-[14px] font-bold bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] transition-colors disabled:opacity-60 cursor-pointer tracking-wide card-inner">
           {isSubmitting ? 'Sending...' : 'Submit'}
         </button>
       </form>
