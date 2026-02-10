@@ -2,10 +2,10 @@
 
 @theme {
   --color-bg: #0A0A0A;
-  --color-surface: #111111;
-  --color-surface-elevated: #181818;
-  --color-border: rgba(255, 255, 255, 0.07);
-  --color-border-highlight: rgba(255, 255, 255, 0.12);
+  --color-surface: #161616;
+  --color-surface-elevated: #1E1E1E;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-highlight: rgba(255, 255, 255, 0.16);
   --color-accent: #4A7BBA;
   --color-accent-hover: #5E8FCC;
   --color-accent-muted: rgba(74, 123, 186, 0.12);
@@ -15,12 +15,13 @@
   --color-tertiary: #C47D5A;
   --color-tertiary-hover: #D08E6C;
   --color-tertiary-muted: rgba(196, 125, 90, 0.12);
+  --color-card-light: #F5F0E8;
+  --color-card-light-text: #1A1A1A;
   --color-text: #E8E8E8;
   --color-text-secondary: #8A8A8A;
   --color-text-muted: #555555;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Satoshi', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
@@ -35,17 +36,16 @@
     font-family: var(--font-sans);
     background-color: var(--color-bg);
     color: var(--color-text);
-    transition: background-color 200ms, color 200ms;
-    overflow-x: hidden;
+    overflow: hidden;
     letter-spacing: -0.01em;
   }
 
   html.light {
-    --color-bg: #FAFAF8;
+    --color-bg: #E8E4DC;
     --color-surface: #FFFFFF;
-    --color-surface-elevated: #F3F3F0;
-    --color-border: rgba(0, 0, 0, 0.07);
-    --color-border-highlight: rgba(0, 0, 0, 0.12);
+    --color-surface-elevated: #F5F2ED;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-highlight: rgba(0, 0, 0, 0.16);
     --color-accent: #1A3A6B;
     --color-accent-hover: #152E56;
     --color-accent-muted: rgba(26, 58, 107, 0.08);
@@ -55,13 +55,15 @@
     --color-tertiary: #A86840;
     --color-tertiary-hover: #8F5632;
     --color-tertiary-muted: rgba(168, 104, 64, 0.08);
+    --color-card-light: #1A1A1A;
+    --color-card-light-text: #F0EDE6;
     --color-text: #1A1A1A;
     --color-text-secondary: #5C5C5C;
     --color-text-muted: #999999;
   }
 
   html.light body {
-    background-color: #FAFAF8;
+    background-color: #E8E4DC;
     color: #1A1A1A;
   }
 
@@ -71,7 +73,7 @@
   }
 }
 
-/* Geometric grid pattern - fine crosshatch for z-depth and precision feel */
+/* Geometric grid pattern - subtle crosshatch */
 .grid-texture::before {
   content: '';
   position: fixed;
@@ -79,122 +81,12 @@
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 0%, transparent 100%);
 }
 html.light .grid-texture::before {
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-}
-
-/* Diagonal accent lines layered over grid for crosshatch depth */
-.grid-texture::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 95px,
-      rgba(74, 123, 186, 0.025) 95px,
-      rgba(74, 123, 186, 0.025) 96px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 143px,
-      rgba(212, 168, 83, 0.02) 143px,
-      rgba(212, 168, 83, 0.02) 144px
-    );
-  mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, black 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, black 0%, transparent 100%);
-}
-html.light .grid-texture::after {
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 95px,
-      rgba(26, 58, 107, 0.03) 95px,
-      rgba(26, 58, 107, 0.03) 96px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 143px,
-      rgba(184, 146, 46, 0.025) 143px,
-      rgba(184, 146, 46, 0.025) 144px
-    );
-}
-
-/* Fine grid - sharp intersecting lines */
-.dot-grid {
-  background-image:
-    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* Radial masks */
-.mask-radial {
-  mask-image: radial-gradient(ellipse 50% 45% at 50% 50%, black 30%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 50% 45% at 50% 50%, black 30%, transparent 100%);
-}
-
-/* Gradient text */
-.text-gradient {
-  background: linear-gradient(180deg, var(--color-text) 30%, var(--color-text-secondary) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Card - sharp geometric edges, no rounding */
-.card {
-  position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0;
-  transition: border-color 0.3s, background-color 0.3s;
-}
-.card:hover {
-  border-color: var(--color-border-highlight);
-  background: var(--color-surface-elevated);
-}
-
-/* Separator */
-.sep {
-  height: 1px;
-  max-width: 80rem;
-  margin: 0 auto;
-  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
-}
-
-/* Section rhythm */
-.section {
-  padding: 5rem 0;
-}
-@media (min-width: 768px) {
-  .section { padding: 7rem 0; }
-}
-
-/* Glow field - geometric, not circular */
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(15px, -10px) scale(1.03) rotate(1deg); }
-  66% { transform: translate(-10px, 8px) scale(0.97) rotate(-1deg); }
-}
-.orb {
-  position: absolute;
-  border-radius: 0;
-  filter: blur(120px);
-  animation: drift 20s ease-in-out infinite;
-  will-change: transform;
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
 }
