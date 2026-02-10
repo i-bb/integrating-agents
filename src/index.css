@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0A0A0A;
-  --color-surface: #141414;
-  --color-surface-elevated: #1C1C1C;
-  --color-border: rgba(255, 255, 255, 0.07);
-  --color-border-highlight: rgba(255, 255, 255, 0.14);
-  --color-accent: #2B4F7F;
-  --color-accent-hover: #3A6499;
-  --color-accent-muted: rgba(43, 79, 127, 0.15);
-  --color-accent-bright: #5B8CC5;
-  --color-secondary: #D4A853;
-  --color-secondary-hover: #E0B965;
-  --color-secondary-muted: rgba(212, 168, 83, 0.12);
-  --color-tertiary: #C47D5A;
-  --color-tertiary-hover: #D08E6C;
-  --color-tertiary-muted: rgba(196, 125, 90, 0.10);
-  --color-text: #E8E8E8;
-  --color-text-secondary: #888888;
-  --color-text-muted: #4A4A4A;
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F4F4F0;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-highlight: rgba(0, 0, 0, 0.16);
+  --color-accent: #1A3A6B;
+  --color-accent-hover: #2B4F7F;
+  --color-accent-muted: rgba(26, 58, 107, 0.08);
+  --color-accent-bright: #4A7BBA;
+  --color-secondary: #B8922E;
+  --color-secondary-hover: #D4A853;
+  --color-secondary-muted: rgba(184, 146, 46, 0.08);
+  --color-tertiary: #A86840;
+  --color-tertiary-hover: #C47D5A;
+  --color-tertiary-muted: rgba(168, 104, 64, 0.08);
+  --color-text: #1A1A1A;
+  --color-text-secondary: #5A5A5A;
+  --color-text-muted: #999999;
 
   --font-sans: 'Satoshi', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
@@ -41,11 +41,10 @@
 
   ::selection {
     background-color: var(--color-secondary);
-    color: #0A0A0A;
+    color: #FFFFFF;
   }
 }
 
-/* Geometric grid */
 .grid-texture::before {
   content: '';
   position: fixed;
@@ -53,13 +52,7 @@
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
-}
-
-/* Stat card shimmer */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }

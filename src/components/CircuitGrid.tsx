@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 
 const GRID = 48
-const TRACE_COUNT = 10
-const TRACE_SPEED = 0.45
-const TRACE_LENGTH = 14
+const TRACE_COUNT = 8
+const TRACE_SPEED = 0.4
+const TRACE_LENGTH = 12
 const NODE_PULSE_DURATION = 140
 const TURN_PROBABILITY = 0.4
 
@@ -65,7 +65,7 @@ function createTrace(w: number, h: number): Trace {
   }
 }
 
-const PALETTE = ['43, 79, 127', '212, 168, 83', '196, 125, 90']
+const PALETTE = ['26, 58, 107', '184, 146, 46', '168, 104, 64']
 
 export default function CircuitGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -151,7 +151,7 @@ export default function CircuitGrid() {
           const midY = (a.y + b.y) / 2
           const distNorm = Math.sqrt(((midX - cx) / radX) ** 2 + ((midY - cy) / radY) ** 2)
           const radialFade = Math.max(1 - distNorm, 0)
-          const alpha = segFade * life * radialFade * 0.18
+          const alpha = segFade * life * radialFade * 0.12
           if (alpha < 0.005) continue
 
           const traceColor = PALETTE[trace.colorIdx]
@@ -161,7 +161,7 @@ export default function CircuitGrid() {
             ctx!.lineTo(a.x + (b.x - a.x) * trace.progress, a.y + (b.y - a.y) * trace.progress)
           } else { ctx!.lineTo(b.x, b.y) }
           ctx!.strokeStyle = `rgba(${traceColor}, ${alpha * 0.3})`
-          ctx!.lineWidth = 4
+          ctx!.lineWidth = 3
           ctx!.stroke()
 
           ctx!.beginPath()
@@ -183,7 +183,7 @@ export default function CircuitGrid() {
         const radialFade = Math.max(1 - distNorm, 0)
         const t = node.age / NODE_PULSE_DURATION
         const pulse = Math.sin(t * Math.PI)
-        const alpha = pulse * radialFade * 0.3
+        const alpha = pulse * radialFade * 0.2
         if (alpha < 0.005) continue
         const size = 2 + pulse * 2
         ctx!.fillStyle = `rgba(${PALETTE[node.colorIdx]}, ${alpha})`
