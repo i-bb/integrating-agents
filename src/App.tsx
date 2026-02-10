@@ -26,7 +26,7 @@ function HomeContent() {
         Make your<br />enterprise<br />
         <span className="text-[var(--color-accent)]">AI-native.</span>
       </h1>
-      <div className="mt-6">
+      <div className="mt-4 overflow-hidden flex-1">
         <AsciiGlobe />
       </div>
     </div>
@@ -205,7 +205,7 @@ export default function App() {
         <div className="w-full max-w-[1100px] h-[min(88vh,720px)] flex gap-3">
 
           {/* Left panel: large content area */}
-          <div className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border)] p-8 sm:p-10 relative overflow-hidden">
+          <div className="flex-1 card-elevated border border-[var(--color-border)] p-8 sm:p-10 relative overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div key={view} {...fade} className="h-full">
                 {view === 'home' && <HomeContent />}
@@ -217,29 +217,29 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          {/* Right panel: compact nav column */}
-          <div className="w-[200px] sm:w-[220px] flex flex-col gap-2 flex-shrink-0">
+          {/* Right panel: nav column */}
+          <div className="w-[240px] sm:w-[270px] flex flex-col gap-2.5 flex-shrink-0">
             {navItems.map((item) => {
               const isActive = view === item.id
               return (
                 <button
                   key={item.id}
                   onClick={() => setView(isActive ? 'home' : item.id)}
-                  className={`text-left px-4 py-3 border transition-all cursor-pointer relative overflow-hidden ${
+                  className={`text-left px-5 py-4 border transition-all cursor-pointer relative overflow-hidden ${
                     isActive
-                      ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
-                      : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
+                      ? 'card-elevated-active bg-[var(--color-accent)] border-[var(--color-accent)]'
+                      : 'card-elevated border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
                   }`}
                 >
                   {!isActive && (
                     <div className="absolute top-0 left-0 w-full h-[2px]" style={{ backgroundColor: item.accentColor }} />
                   )}
-                  <p className={`text-[13px] font-bold leading-tight ${
+                  <p className={`text-[14px] font-bold leading-tight ${
                     isActive ? 'text-white' : 'text-[var(--color-text)]'
                   }`}>
                     {item.title}
                   </p>
-                  <p className={`text-[10px] leading-[1.4] mt-1 ${
+                  <p className={`text-[11px] leading-[1.4] mt-1.5 ${
                     isActive ? 'text-white/60' : 'text-[var(--color-text-muted)]'
                   }`}>
                     {item.desc}
@@ -254,23 +254,23 @@ export default function App() {
             {/* CTA */}
             <button
               onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
-              className={`group text-left px-4 py-4 border transition-all cursor-pointer relative overflow-hidden ${
+              className={`group text-left px-5 py-5 border transition-all cursor-pointer relative overflow-hidden ${
                 view === 'contact'
-                  ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
-                  : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-accent)]/30'
+                  ? 'card-elevated-active bg-[var(--color-accent)] border-[var(--color-accent)]'
+                  : 'card-elevated border-[var(--color-border)] hover:border-[var(--color-accent)]/30'
               }`}
             >
-              <p className={`text-[10px] font-medium tracking-[0.12em] uppercase mb-1.5 ${
+              <p className={`text-[10px] font-medium tracking-[0.12em] uppercase mb-2 ${
                 view === 'contact' ? 'text-white/50' : 'text-[var(--color-text-muted)]'
               }`}>
                 integrateagents.ai
               </p>
-              <p className={`text-[15px] font-black leading-tight tracking-[-0.01em] ${
+              <p className={`text-[16px] font-black leading-tight tracking-[-0.01em] ${
                 view === 'contact' ? 'text-white' : 'text-[var(--color-text)]'
               }`}>
                 Get Started
               </p>
-              <div className={`mt-2 h-[1px] transition-all ${
+              <div className={`mt-2.5 h-[1px] transition-all duration-300 ${
                 view === 'contact'
                   ? 'bg-white/20 w-full'
                   : 'bg-[var(--color-accent)] w-8 group-hover:w-full'
