@@ -16,19 +16,13 @@ const fade = {
   transition: { duration: 0.3, ease: ease4 },
 }
 
-const NAV_ITEMS: { id: View; title: string; color: string }[] = [
-  { id: 'strategy', title: 'Strategy', color: 'var(--color-secondary)' },
-  { id: 'transformation', title: 'Transformation', color: 'var(--color-tertiary)' },
-  { id: 'engineering', title: 'Engineering', color: 'var(--color-accent-bright)' },
-]
-
 function HomeContent() {
   return (
     <div className="flex flex-col h-full">
       <p className="text-[12px] font-medium text-[var(--color-text-muted)] tracking-[0.15em] uppercase mb-6">
         Integrated Agents
       </p>
-      <h1 className="text-[2.8rem] sm:text-[3.4rem] md:text-[4rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)]">
+      <h1 className="text-[2.8rem] sm:text-[3.4rem] md:text-[4.2rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)]">
         Make your<br />enterprise<br />
         <span className="text-[var(--color-accent)]">AI-native.</span>
       </h1>
@@ -99,7 +93,7 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
         <p className="text-[12px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase">{c.tagline}</p>
       </div>
 
-      <h2 className="text-[2.4rem] sm:text-[2.8rem] md:text-[3.2rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)] mb-3">
+      <h2 className="text-[2.4rem] sm:text-[2.8rem] md:text-[3.4rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)] mb-3">
         {c.title}
       </h2>
       <p className="text-[14px] text-[var(--color-text-secondary)] leading-[1.7] max-w-lg mb-5">
@@ -197,65 +191,92 @@ function ContactContent({ onBack }: { onBack: () => void }) {
 export default function App() {
   const [view, setView] = useState<View>('home')
 
+  const navItems: { id: View; title: string; desc: string; accentColor: string }[] = [
+    { id: 'strategy', title: 'Strategy', desc: 'AI audits and execution-ready roadmaps', accentColor: 'var(--color-secondary)' },
+    { id: 'transformation', title: 'Transformation', desc: 'End-to-end AI deployment with ROI', accentColor: 'var(--color-tertiary)' },
+    { id: 'engineering', title: 'Engineering', desc: 'Elite pods shipping production software', accentColor: 'var(--color-accent-bright)' },
+  ]
+
   return (
     <div className="grid-texture h-screen w-screen overflow-hidden">
       <CircuitGrid />
 
       <div className="relative z-10 h-full flex items-center justify-center px-5 sm:px-8 py-5">
-        <div className="w-full max-w-[960px] h-[min(88vh,700px)] flex flex-col">
+        <div className="w-full max-w-[1100px] h-[min(88vh,720px)] flex gap-3">
 
-          {/* Main container */}
-          <div className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border)] p-7 sm:p-9 relative overflow-hidden flex flex-col">
-            {/* Content area */}
-            <div className="flex-1 min-h-0 overflow-y-auto">
-              <AnimatePresence mode="wait">
-                <motion.div key={view} {...fade} className="h-full">
-                  {view === 'home' && <HomeContent />}
-                  {view === 'contact' && <ContactContent onBack={() => setView('home')} />}
-                  {(view === 'strategy' || view === 'transformation' || view === 'engineering') && (
-                    <ServiceContent view={view} onBack={() => setView('home')} />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Nav tabs inside the container */}
-            <div className="flex items-center gap-2 pt-5 mt-auto border-t border-[var(--color-border)]">
-              {NAV_ITEMS.map((item) => {
-                const isActive = view === item.id
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setView(isActive ? 'home' : item.id)}
-                    className={`px-4 py-2 text-[12px] font-semibold tracking-wide border transition-all cursor-pointer relative ${
-                      isActive
-                        ? 'bg-[var(--color-accent)] border-[var(--color-accent)] text-white'
-                        : 'bg-transparent border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-border-highlight)] hover:text-[var(--color-text)]'
-                    }`}
-                  >
-                    {!isActive && (
-                      <span className="absolute top-0 left-0 w-full h-[2px]" style={{ backgroundColor: item.color }} />
-                    )}
-                    {item.title}
-                  </button>
-                )
-              })}
-
-              <div className="ml-auto">
-                <button
-                  onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
-                  className={`px-5 py-2.5 text-[13px] font-black tracking-wide transition-all cursor-pointer ${
-                    view === 'contact'
-                      ? 'bg-[var(--color-secondary)] text-white border border-[var(--color-secondary)]'
-                      : 'bg-[var(--color-secondary)] text-white border border-[var(--color-secondary)] hover:bg-[var(--color-secondary-hover)]'
-                  }`}
-                >
-                  Get Started &rarr;
-                </button>
-              </div>
-            </div>
+          {/* Left panel: large content area */}
+          <div className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border)] p-8 sm:p-10 relative overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div key={view} {...fade} className="h-full">
+                {view === 'home' && <HomeContent />}
+                {view === 'contact' && <ContactContent onBack={() => setView('home')} />}
+                {(view === 'strategy' || view === 'transformation' || view === 'engineering') && (
+                  <ServiceContent view={view} onBack={() => setView('home')} />
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
+          {/* Right panel: compact nav column */}
+          <div className="w-[200px] sm:w-[220px] flex flex-col gap-2 flex-shrink-0">
+            {navItems.map((item) => {
+              const isActive = view === item.id
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setView(isActive ? 'home' : item.id)}
+                  className={`text-left px-4 py-3 border transition-all cursor-pointer relative overflow-hidden ${
+                    isActive
+                      ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
+                      : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
+                  }`}
+                >
+                  {!isActive && (
+                    <div className="absolute top-0 left-0 w-full h-[2px]" style={{ backgroundColor: item.accentColor }} />
+                  )}
+                  <p className={`text-[13px] font-bold leading-tight ${
+                    isActive ? 'text-white' : 'text-[var(--color-text)]'
+                  }`}>
+                    {item.title}
+                  </p>
+                  <p className={`text-[10px] leading-[1.4] mt-1 ${
+                    isActive ? 'text-white/60' : 'text-[var(--color-text-muted)]'
+                  }`}>
+                    {item.desc}
+                  </p>
+                </button>
+              )
+            })}
+
+            {/* Spacer pushes CTA to bottom */}
+            <div className="flex-1" />
+
+            {/* CTA */}
+            <button
+              onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
+              className={`group text-left px-4 py-4 border transition-all cursor-pointer relative overflow-hidden ${
+                view === 'contact'
+                  ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
+                  : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-accent)]/30'
+              }`}
+            >
+              <p className={`text-[10px] font-medium tracking-[0.12em] uppercase mb-1.5 ${
+                view === 'contact' ? 'text-white/50' : 'text-[var(--color-text-muted)]'
+              }`}>
+                integrateagents.ai
+              </p>
+              <p className={`text-[15px] font-black leading-tight tracking-[-0.01em] ${
+                view === 'contact' ? 'text-white' : 'text-[var(--color-text)]'
+              }`}>
+                Get Started
+              </p>
+              <div className={`mt-2 h-[1px] transition-all ${
+                view === 'contact'
+                  ? 'bg-white/20 w-full'
+                  : 'bg-[var(--color-accent)] w-8 group-hover:w-full'
+              }`} />
+            </button>
+          </div>
         </div>
       </div>
 
