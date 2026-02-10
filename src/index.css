@@ -10,6 +10,7 @@
   --color-accent-hover: #2B4F7F;
   --color-accent-muted: rgba(26, 58, 107, 0.08);
   --color-accent-bright: #4A7BBA;
+  --color-accent-light: #2E5A94;
   --color-secondary: #B8922E;
   --color-secondary-hover: #D4A853;
   --color-secondary-muted: rgba(184, 146, 46, 0.08);
@@ -57,15 +58,16 @@
   background-size: 48px 48px;
 }
 
-.card-elevated {
-  background: #FFFFFF;
+.card-pop {
   box-shadow:
-    1px 1px 0 0 rgba(0, 0, 0, 0.04),
-    2px 2px 0 0 rgba(0, 0, 0, 0.02);
+    3px 3px 0 0 rgba(0, 0, 0, 0.10),
+    6px 6px 0 0 rgba(0, 0, 0, 0.05),
+    8px 8px 0 0 rgba(0, 0, 0, 0.02);
 }
 
-.card-elevated-active {
+.card-pop-active {
   box-shadow:
-    1px 1px 0 0 rgba(0, 0, 0, 0.06),
-    3px 3px 0 0 rgba(0, 0, 0, 0.03);
+    2px 2px 0 0 rgba(0, 0, 0, 0.12),
+    5px 5px 0 0 rgba(0, 0, 0, 0.06),
+    7px 7px 0 0 rgba(0, 0, 0, 0.03);
 }

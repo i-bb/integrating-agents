@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import CircuitGrid from './components/CircuitGrid'
-import AsciiGlobe from './components/AsciiGlobe'
 
 type View = 'home' | 'strategy' | 'transformation' | 'engineering' | 'contact'
 
@@ -18,17 +17,17 @@ const fade = {
 
 function HomeContent() {
   return (
-    <div className="flex flex-col h-full">
-      <p className="text-[12px] font-medium text-[var(--color-text-muted)] tracking-[0.15em] uppercase mb-6">
+    <div className="flex flex-col h-full justify-center">
+      <p className="text-[12px] font-medium text-white/40 tracking-[0.15em] uppercase mb-6">
         Integrated Agents
       </p>
-      <h1 className="text-[2.8rem] sm:text-[3.4rem] md:text-[4.2rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)]">
+      <h1 className="text-[2.4rem] sm:text-[3.2rem] md:text-[4rem] lg:text-[4.5rem] font-black leading-[1.0] tracking-[-0.04em] text-white">
         Make your<br />enterprise<br />
-        <span className="text-[var(--color-accent)]">AI-native.</span>
+        <span className="text-[var(--color-secondary)]">AI-native.</span>
       </h1>
-      <div className="mt-4 overflow-hidden flex-1">
-        <AsciiGlobe />
-      </div>
+      <p className="mt-6 text-[14px] sm:text-[15px] text-white/50 leading-[1.7] max-w-md">
+        AI strategy, transformation, and engineering deployed at startup speed.
+      </p>
     </div>
   )
 }
@@ -87,34 +86,34 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-3 mb-5">
-        <button onClick={onBack} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer">
+        <button onClick={onBack} className="text-white/40 hover:text-white transition-colors cursor-pointer">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <p className="text-[12px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase">{c.tagline}</p>
       </div>
 
-      <h2 className="text-[2.4rem] sm:text-[2.8rem] md:text-[3.4rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)] mb-3">
+      <h2 className="text-[2rem] sm:text-[2.6rem] md:text-[3.2rem] font-black leading-[1.0] tracking-[-0.04em] text-white mb-3">
         {c.title}
       </h2>
-      <p className="text-[14px] text-[var(--color-text-secondary)] leading-[1.7] max-w-lg mb-5">
+      <p className="text-[14px] text-white/60 leading-[1.7] max-w-lg mb-5">
         {c.desc}
       </p>
 
-      <div className="flex gap-2.5 mb-6">
+      <div className="flex flex-col sm:flex-row gap-2.5 mb-6">
         {c.metrics.map((m, i) => (
-          <div key={i} className="flex-1 border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-3">
+          <div key={i} className="flex-1 border border-white/10 bg-white/5 p-3">
             <p className="text-[1.3rem] font-black leading-none" style={{ color: m.color }}>{m.value}</p>
-            <p className="text-[10px] text-[var(--color-text-muted)] mt-1 uppercase tracking-wider">{m.label}</p>
+            <p className="text-[10px] text-white/40 mt-1 uppercase tracking-wider">{m.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="flex-1 grid grid-cols-3 gap-2.5">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
         {c.capabilities.map((cap, i) => (
-          <div key={i} className="border border-[var(--color-border)] p-3 flex flex-col group hover:border-[var(--color-border-highlight)] transition-colors">
+          <div key={i} className="border border-white/10 bg-white/5 p-3 flex flex-col">
             <div className="w-5 h-0.5 mb-2.5" style={{ backgroundColor: i === 0 ? 'var(--color-secondary)' : i === 1 ? 'var(--color-tertiary)' : 'var(--color-accent-bright)' }} />
-            <p className="text-[13px] font-bold text-[var(--color-text)] mb-1">{cap.title}</p>
-            <p className="text-[11px] text-[var(--color-text-secondary)] leading-[1.6]">{cap.desc}</p>
+            <p className="text-[13px] font-bold text-white mb-1">{cap.title}</p>
+            <p className="text-[11px] text-white/50 leading-[1.6]">{cap.desc}</p>
           </div>
         ))}
       </div>
@@ -130,16 +129,16 @@ function ContactContent({ onBack }: { onBack: () => void }) {
     await new Promise(r => setTimeout(r, 600))
     setSent(true)
   }
-  const input = 'w-full border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-3 py-2.5 text-[13px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)]/30 transition-colors'
+  const input = 'w-full border border-white/15 bg-white/5 px-3 py-2.5 text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors'
 
   if (sent) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
-        <div className="w-10 h-10 bg-[var(--color-accent-muted)] flex items-center justify-center mb-4">
-          <svg className="w-5 h-5 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4">
+          <svg className="w-5 h-5 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h3 className="text-[1.3rem] font-bold text-[var(--color-text)]">We'll be in touch.</h3>
-        <p className="mt-1.5 text-[13px] text-[var(--color-text-secondary)]">Expect a response within 24 hours.</p>
+        <h3 className="text-[1.3rem] font-bold text-white">We'll be in touch.</h3>
+        <p className="mt-1.5 text-[13px] text-white/50">Expect a response within 24 hours.</p>
       </div>
     )
   }
@@ -147,19 +146,19 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-3 mb-5">
-        <button onClick={onBack} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer">
+        <button onClick={onBack} className="text-white/40 hover:text-white transition-colors cursor-pointer">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <p className="text-[12px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase">Get Started</p>
       </div>
 
-      <h2 className="text-[2rem] sm:text-[2.4rem] font-black leading-[1.05] tracking-[-0.03em] text-[var(--color-text)] mb-2">
+      <h2 className="text-[1.8rem] sm:text-[2.2rem] md:text-[2.6rem] font-black leading-[1.05] tracking-[-0.03em] text-white mb-2">
         Tell us about your business.
       </h2>
-      <p className="text-[13px] text-[var(--color-text-secondary)] mb-6">We respond within 24 hours. No spam, no obligation.</p>
+      <p className="text-[13px] text-white/50 mb-6">We respond within 24 hours. No spam, no obligation.</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col gap-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <input {...register('name', { required: true })} className={input} placeholder="Name *" />
             {errors.name && <p className="mt-1 text-[10px] text-[var(--color-tertiary)]">Required</p>}
@@ -169,7 +168,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
             {errors.email && <p className="mt-1 text-[10px] text-[var(--color-tertiary)]">Required</p>}
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <input {...register('company', { required: true })} className={input} placeholder="Company *" />
             {errors.company && <p className="mt-1 text-[10px] text-[var(--color-tertiary)]">Required</p>}
@@ -180,7 +179,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
           <textarea {...register('needs', { required: true })} className={`${input} h-full min-h-[80px] resize-none`} placeholder="What challenges are you facing? *" />
           {errors.needs && <p className="mt-1 text-[10px] text-[var(--color-tertiary)]">Required</p>}
         </div>
-        <button type="submit" disabled={isSubmitting} className="w-full py-3 text-[14px] font-bold bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] transition-colors disabled:opacity-60 cursor-pointer tracking-wide">
+        <button type="submit" disabled={isSubmitting} className="w-full py-3 text-[14px] font-bold bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] transition-colors disabled:opacity-60 cursor-pointer tracking-wide">
           {isSubmitting ? 'Sending...' : 'Submit'}
         </button>
       </form>
@@ -191,21 +190,22 @@ function ContactContent({ onBack }: { onBack: () => void }) {
 export default function App() {
   const [view, setView] = useState<View>('home')
 
-  const navItems: { id: View; title: string; desc: string; accentColor: string }[] = [
-    { id: 'strategy', title: 'Strategy', desc: 'AI audits and execution-ready roadmaps', accentColor: 'var(--color-secondary)' },
-    { id: 'transformation', title: 'Transformation', desc: 'End-to-end AI deployment with ROI', accentColor: 'var(--color-tertiary)' },
-    { id: 'engineering', title: 'Engineering', desc: 'Elite pods shipping production software', accentColor: 'var(--color-accent-bright)' },
+  const navItems: { id: View; title: string; desc: string }[] = [
+    { id: 'strategy', title: 'Strategy', desc: 'AI audits and execution-ready roadmaps' },
+    { id: 'transformation', title: 'Transformation', desc: 'End-to-end AI deployment with ROI' },
+    { id: 'engineering', title: 'Engineering', desc: 'Elite pods shipping production software' },
   ]
 
   return (
     <div className="grid-texture h-screen w-screen overflow-hidden">
       <CircuitGrid />
 
-      <div className="relative z-10 h-full flex items-center justify-center px-5 sm:px-8 py-5">
-        <div className="w-full max-w-[1100px] h-[min(88vh,720px)] flex gap-3">
+      <div className="relative z-10 h-full flex items-center justify-center px-3 sm:px-6 lg:px-8 py-3 sm:py-5">
+        {/* Two-panel layout: stacks on mobile */}
+        <div className="w-full max-w-[1280px] h-full max-h-[800px] flex flex-col md:flex-row gap-2.5 sm:gap-3">
 
-          {/* Left panel: large content area */}
-          <div className="flex-1 card-elevated border border-[var(--color-border)] p-8 sm:p-10 relative overflow-hidden">
+          {/* Left panel: navy main content */}
+          <div className="flex-1 bg-[var(--color-accent)] card-pop p-6 sm:p-8 lg:p-10 relative overflow-hidden min-h-0">
             <AnimatePresence mode="wait">
               <motion.div key={view} {...fade} className="h-full">
                 {view === 'home' && <HomeContent />}
@@ -218,29 +218,26 @@ export default function App() {
           </div>
 
           {/* Right panel: nav column */}
-          <div className="w-[240px] sm:w-[270px] flex flex-col gap-2.5 flex-shrink-0">
+          <div className="w-full md:w-[260px] lg:w-[300px] flex flex-row md:flex-col gap-2 sm:gap-2.5 flex-shrink-0 min-h-0 md:min-h-full">
             {navItems.map((item) => {
               const isActive = view === item.id
               return (
                 <button
                   key={item.id}
                   onClick={() => setView(isActive ? 'home' : item.id)}
-                  className={`text-left px-5 py-4 border transition-all cursor-pointer relative overflow-hidden ${
+                  className={`text-left px-4 py-3 sm:px-5 sm:py-4 transition-all cursor-pointer flex-1 md:flex-initial ${
                     isActive
-                      ? 'card-elevated-active bg-[var(--color-accent)] border-[var(--color-accent)]'
-                      : 'card-elevated border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
+                      ? 'bg-[var(--color-accent-light)] card-pop-active text-white'
+                      : 'bg-white card-pop hover:translate-y-[-1px]'
                   }`}
                 >
-                  {!isActive && (
-                    <div className="absolute top-0 left-0 w-full h-[2px]" style={{ backgroundColor: item.accentColor }} />
-                  )}
-                  <p className={`text-[14px] font-bold leading-tight ${
+                  <p className={`text-[13px] sm:text-[14px] font-bold leading-tight ${
                     isActive ? 'text-white' : 'text-[var(--color-text)]'
                   }`}>
                     {item.title}
                   </p>
-                  <p className={`text-[11px] leading-[1.4] mt-1.5 ${
-                    isActive ? 'text-white/60' : 'text-[var(--color-text-muted)]'
+                  <p className={`text-[10px] sm:text-[11px] leading-[1.4] mt-1 sm:mt-1.5 ${
+                    isActive ? 'text-white/60' : 'text-[var(--color-text-secondary)]'
                   }`}>
                     {item.desc}
                   </p>
@@ -248,29 +245,29 @@ export default function App() {
               )
             })}
 
-            {/* Spacer pushes CTA to bottom */}
-            <div className="flex-1" />
+            {/* Spacer: only on desktop */}
+            <div className="hidden md:block flex-1" />
 
             {/* CTA */}
             <button
               onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
-              className={`group text-left px-5 py-5 border transition-all cursor-pointer relative overflow-hidden ${
+              className={`group text-left px-4 py-3 sm:px-5 sm:py-5 transition-all cursor-pointer flex-1 md:flex-initial ${
                 view === 'contact'
-                  ? 'card-elevated-active bg-[var(--color-accent)] border-[var(--color-accent)]'
-                  : 'card-elevated border-[var(--color-border)] hover:border-[var(--color-accent)]/30'
+                  ? 'bg-[var(--color-accent-light)] card-pop-active text-white'
+                  : 'bg-white card-pop hover:translate-y-[-1px]'
               }`}
             >
-              <p className={`text-[10px] font-medium tracking-[0.12em] uppercase mb-2 ${
-                view === 'contact' ? 'text-white/50' : 'text-[var(--color-text-muted)]'
+              <p className={`text-[9px] sm:text-[10px] font-medium tracking-[0.12em] uppercase mb-1 sm:mb-2 ${
+                view === 'contact' ? 'text-white/50' : 'text-[var(--color-text-secondary)]'
               }`}>
                 integrateagents.ai
               </p>
-              <p className={`text-[16px] font-black leading-tight tracking-[-0.01em] ${
+              <p className={`text-[14px] sm:text-[16px] font-black leading-tight tracking-[-0.01em] ${
                 view === 'contact' ? 'text-white' : 'text-[var(--color-text)]'
               }`}>
                 Get Started
               </p>
-              <div className={`mt-2.5 h-[1px] transition-all duration-300 ${
+              <div className={`mt-2 sm:mt-2.5 h-[1px] transition-all duration-300 ${
                 view === 'contact'
                   ? 'bg-white/20 w-full'
                   : 'bg-[var(--color-accent)] w-8 group-hover:w-full'
