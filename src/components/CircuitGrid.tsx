@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react'
-import { useTheme } from '../hooks/useTheme'
 
 const GRID = 48
-const TRACE_COUNT = 12
-const TRACE_SPEED = 0.5 // pixels per frame
-const TRACE_LENGTH = 16 // segments
-const NODE_PULSE_DURATION = 160 // frames
+const TRACE_COUNT = 10
+const TRACE_SPEED = 0.45
+const TRACE_LENGTH = 14
+const NODE_PULSE_DURATION = 140
 const TURN_PROBABILITY = 0.4
 
 interface Point { x: number; y: number }
@@ -21,7 +20,7 @@ const DIRS: Direction[] = [
 interface Trace {
   segments: Point[]
   dir: Direction
-  progress: number // 0..1 between current grid nodes
+  progress: number
   age: number
   maxAge: number
   colorIdx: number
@@ -47,7 +46,6 @@ function pickDir(current: Direction): Direction {
 }
 
 function createTrace(w: number, h: number): Trace {
-  // Bias starting positions toward center (gaussian-ish distribution)
   const centerX = w / 2
   const centerY = h * 0.4
   const spreadX = w * 0.35
@@ -67,19 +65,14 @@ function createTrace(w: number, h: number): Trace {
   }
 }
 
+const PALETTE = ['43, 79, 127', '212, 168, 83', '196, 125, 90']
+
 export default function CircuitGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { theme } = useTheme()
-  const themeRef = useRef(theme)
-
-  useEffect(() => {
-    themeRef.current = theme
-  }, [theme])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
@@ -107,12 +100,6 @@ export default function CircuitGrid() {
       const h = window.innerHeight
       ctx!.clearRect(0, 0, w, h)
 
-      const isDark = themeRef.current === 'dark'
-      const palette = isDark
-        ? ['74, 123, 186', '212, 168, 83', '196, 125, 90']
-        : ['26, 58, 107', '184, 146, 46', '168, 104, 64']
-
-      // Radial fade mask via compositing
       const cx = w / 2
       const cy = h * 0.4
       const radX = w * 0.5
@@ -130,7 +117,6 @@ export default function CircuitGrid() {
           const nx = snapToGrid(last.x + trace.dir.dx * GRID)
           const ny = snapToGrid(last.y + trace.dir.dy * GRID)
 
-          // Bounds check - if out of bounds, pick new direction
           if (nx < GRID || nx > w - GRID || ny < GRID || ny > h - GRID) {
             trace.dir = { dx: -trace.dir.dx, dy: -trace.dir.dy }
             const bx = snapToGrid(last.x + trace.dir.dx * GRID)
@@ -140,7 +126,6 @@ export default function CircuitGrid() {
             trace.segments.push({ x: nx, y: ny })
           }
 
-          // Node pulse at the turn
           if (trace.segments.length > 2) {
             const prev = trace.segments[trace.segments.length - 3]
             const curr = trace.segments[trace.segments.length - 2]
@@ -148,93 +133,60 @@ export default function CircuitGrid() {
               nodes.push({ x: curr.x, y: curr.y, age: 0, colorIdx: trace.colorIdx })
             }
           }
-
-          if (trace.segments.length > TRACE_LENGTH) {
-            trace.segments.shift()
-          }
+          if (trace.segments.length > TRACE_LENGTH) trace.segments.shift()
         }
 
-        // Recycle dead traces
-        if (trace.age > trace.maxAge) {
-          traces[t] = createTrace(w, h)
-          continue
-        }
+        if (trace.age > trace.maxAge) { traces[t] = createTrace(w, h); continue }
 
-        // Draw the trace
         const fadeIn = Math.min(trace.age / 60, 1)
         const fadeOut = Math.max(1 - (trace.age - trace.maxAge + 120) / 120, 0)
         const life = Math.min(fadeIn, trace.age > trace.maxAge - 120 ? fadeOut : 1)
-
         if (trace.segments.length < 2) continue
 
         for (let i = 0; i < trace.segments.length - 1; i++) {
           const a = trace.segments[i]
           const b = trace.segments[i + 1]
           const segFade = (i + 1) / trace.segments.length
-
-          // Distance from center for radial fade
           const midX = (a.x + b.x) / 2
           const midY = (a.y + b.y) / 2
           const distNorm = Math.sqrt(((midX - cx) / radX) ** 2 + ((midY - cy) / radY) ** 2)
           const radialFade = Math.max(1 - distNorm, 0)
-
-          const alpha = segFade * life * radialFade * (isDark ? 0.22 : 0.16)
+          const alpha = segFade * life * radialFade * 0.18
           if (alpha < 0.005) continue
 
-          ctx!.beginPath()
-          ctx!.moveTo(a.x, a.y)
-
-          // Animate the last segment partially
-          if (i === trace.segments.length - 2) {
-            const lx = a.x + (b.x - a.x) * trace.progress
-            const ly = a.y + (b.y - a.y) * trace.progress
-            ctx!.lineTo(lx, ly)
-          } else {
-            ctx!.lineTo(b.x, b.y)
-          }
-
-          const traceColor = palette[trace.colorIdx]
-
-          // Glow pass - wider, softer
-          ctx!.strokeStyle = `rgba(${traceColor}, ${alpha * 0.3})`
-          ctx!.lineWidth = 4
-          ctx!.stroke()
-
-          // Core pass - sharp
+          const traceColor = PALETTE[trace.colorIdx]
           ctx!.beginPath()
           ctx!.moveTo(a.x, a.y)
           if (i === trace.segments.length - 2) {
             ctx!.lineTo(a.x + (b.x - a.x) * trace.progress, a.y + (b.y - a.y) * trace.progress)
-          } else {
-            ctx!.lineTo(b.x, b.y)
-          }
+          } else { ctx!.lineTo(b.x, b.y) }
+          ctx!.strokeStyle = `rgba(${traceColor}, ${alpha * 0.3})`
+          ctx!.lineWidth = 4
+          ctx!.stroke()
+
+          ctx!.beginPath()
+          ctx!.moveTo(a.x, a.y)
+          if (i === trace.segments.length - 2) {
+            ctx!.lineTo(a.x + (b.x - a.x) * trace.progress, a.y + (b.y - a.y) * trace.progress)
+          } else { ctx!.lineTo(b.x, b.y) }
           ctx!.strokeStyle = `rgba(${traceColor}, ${alpha})`
           ctx!.lineWidth = 1
           ctx!.stroke()
         }
       }
 
-      // Draw node pulses (intersection connections)
       for (let i = nodes.length - 1; i >= 0; i--) {
         const node = nodes[i]
         node.age++
-        if (node.age > NODE_PULSE_DURATION) {
-          nodes.splice(i, 1)
-          continue
-        }
-
+        if (node.age > NODE_PULSE_DURATION) { nodes.splice(i, 1); continue }
         const distNorm = Math.sqrt(((node.x - cx) / radX) ** 2 + ((node.y - cy) / radY) ** 2)
         const radialFade = Math.max(1 - distNorm, 0)
-
         const t = node.age / NODE_PULSE_DURATION
         const pulse = Math.sin(t * Math.PI)
-        const alpha = pulse * radialFade * (isDark ? 0.35 : 0.25)
-
+        const alpha = pulse * radialFade * 0.3
         if (alpha < 0.005) continue
-
-        const nodeColor = palette[node.colorIdx]
         const size = 2 + pulse * 2
-        ctx!.fillStyle = `rgba(${nodeColor}, ${alpha})`
+        ctx!.fillStyle = `rgba(${PALETTE[node.colorIdx]}, ${alpha})`
         ctx!.fillRect(node.x - size / 2, node.y - size / 2, size, size)
       }
 
@@ -242,18 +194,8 @@ export default function CircuitGrid() {
     }
 
     animId = requestAnimationFrame(tick)
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', resize)
-    }
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize) }
   }, [])
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-[1] pointer-events-none"
-      aria-hidden="true"
-    />
-  )
+  return <canvas ref={canvasRef} className="fixed inset-0 z-[1] pointer-events-none" aria-hidden="true" />
 }

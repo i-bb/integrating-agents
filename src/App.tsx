@@ -2,98 +2,156 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import CircuitGrid from './components/CircuitGrid'
-import { useTheme } from './hooks/useTheme'
 
 type View = 'home' | 'strategy' | 'transformation' | 'engineering' | 'contact'
 
 interface FormData { name: string; email: string; company: string; role: string; needs: string }
 
-const NAV_ITEMS: { id: View; stat: string; label: string }[] = [
-  { id: 'strategy', stat: 'Strategy', label: 'Holistic audits that surface the highest-impact AI use cases and deliver an execution-ready roadmap' },
-  { id: 'transformation', stat: 'Transformation', label: 'End-to-end implementation across product, process, and people. Baseline metrics from day one' },
-  { id: 'engineering', stat: 'Engineering', label: 'Elite squads that ship production-grade software using AI-accelerated workflows' },
-]
-
-const CONTENT: Record<Exclude<View, 'contact' | 'home'>, { title: string; body: string; bullets: string[] }> = {
-  strategy: {
-    title: 'AI Strategy',
-    body: 'No 6-month strategy work. No 200-slide presentations. We get right to work on holistic audits that surface the most compelling AI use cases.',
-    bullets: [
-      'Function-specific assessments across every department',
-      'Prioritized use cases ranked by business impact',
-      'Implementation roadmap your team can run with, or hand back to us',
-    ],
-  },
-  transformation: {
-    title: 'AI Transformation',
-    body: 'Custom partnership that combines bespoke change management and AI tooling with baseline metrics to drive measurable ROI.',
-    bullets: [
-      'Custom AI tooling and workflow automation',
-      'Change management and team upskilling',
-      'Measurable ROI tracked continuously',
-    ],
-  },
-  engineering: {
-    title: 'AI Engineering',
-    body: 'Outcome-based, subscription-style engineering squads that leverage AI acceleration to ship software faster and more affordably.',
-    bullets: [
-      'Dedicated pods with technical PM and engineers',
-      'Sprint-based delivery with outcome-based pricing',
-      'Seamless integration into your existing stack and tools',
-    ],
-  },
+const ease4 = [0.22, 1, 0.36, 1] as [number, number, number, number]
+const fade = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+  transition: { duration: 0.3, ease: ease4 },
 }
 
-const fade = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
-  transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+const ASCII_ART = `     _    ___      _   _    _  _____ _____     _______
+    / \\  |_ _|    | \\ | |  / \\|_   _|_ _\\ \\   / / ____|
+   / _ \\  | |_____|  \\| | / _ \\ | |  | | \\ \\ / /|  _|
+  / ___ \\ | |_____| |\\  |/ ___ \\| |  | |  \\ V / | |___
+ /_/   \\_\\___|    |_| \\_/_/   \\_\\_| |___|  \\_/  |_____|`
+
+function AsciiArt() {
+  return (
+    <pre className="text-[7px] sm:text-[8px] md:text-[9px] leading-[1.15] text-[var(--color-accent-bright)] opacity-25 select-none whitespace-pre overflow-hidden mt-5 tracking-[0.02em]">
+      {ASCII_ART}
+    </pre>
+  )
 }
 
 function HomeContent() {
   return (
-    <div className="flex flex-col justify-between h-full">
-      <div>
-        <p className="text-[12px] font-medium text-[var(--color-text-secondary)] tracking-wide mb-6">integrateagents.ai</p>
-        <h1 className="text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] font-bold leading-[1.05] tracking-[-0.03em] text-[var(--color-text)]">
-          Make your enterprise<br />AI-native.
-        </h1>
-      </div>
-      <div className="mt-auto pt-8 border-t border-[var(--color-border)]">
-        <p className="text-[2rem] sm:text-[2.5rem] font-bold tracking-[-0.02em] text-[var(--color-text)]">3 Pillars</p>
-        <p className="text-[13px] text-[var(--color-text-secondary)] mt-1">Strategy, transformation, and engineering</p>
+    <div className="flex flex-col h-full">
+      <p className="text-[13px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase mb-8">
+        Integrated Agents
+      </p>
+      <h1 className="text-[3rem] sm:text-[3.5rem] md:text-[4.2rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)]">
+        Make your<br />enterprise<br />
+        <span className="text-[var(--color-accent-bright)]">AI-native.</span>
+      </h1>
+      <AsciiArt />
+      <div className="mt-auto flex items-end justify-between">
+        <div className="flex gap-8">
+          <div>
+            <p className="text-[2rem] font-black text-[var(--color-secondary)] leading-none">10x</p>
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">faster deployment</p>
+          </div>
+          <div>
+            <p className="text-[2rem] font-black text-[var(--color-tertiary)] leading-none">3</p>
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">service pillars</p>
+          </div>
+          <div>
+            <p className="text-[2rem] font-black text-[var(--color-accent-bright)] leading-none">&lt;2w</p>
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">to kick off</p>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-function ServiceContent({ view }: { view: 'strategy' | 'transformation' | 'engineering' }) {
-  const c = CONTENT[view]
+function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' | 'engineering'; onBack: () => void }) {
+  const content = {
+    strategy: {
+      title: 'AI Strategy',
+      tagline: 'Clarity before code.',
+      desc: 'We audit every function, surface the highest-ROI AI use cases, and hand you a roadmap your team can execute tomorrow.',
+      metrics: [
+        { value: '4-6w', label: 'audit timeline', color: 'var(--color-secondary)' },
+        { value: '20+', label: 'use cases surfaced', color: 'var(--color-tertiary)' },
+        { value: '100%', label: 'execution-ready', color: 'var(--color-accent-bright)' },
+      ],
+      capabilities: [
+        { title: 'Function-Specific Audits', desc: 'Every department. Every workflow. Every opportunity.' },
+        { title: 'ROI-Ranked Use Cases', desc: 'Prioritized by business impact and feasibility score.' },
+        { title: 'Execution Roadmap', desc: 'Run it yourself or hand it back to us.' },
+      ],
+    },
+    transformation: {
+      title: 'AI Transformation',
+      tagline: 'Product. Process. People.',
+      desc: 'We embed with your team to deploy AI across your entire operation, with baseline metrics tracking ROI from day one.',
+      metrics: [
+        { value: '25%', label: 'efficiency gain', color: 'var(--color-secondary)' },
+        { value: 'D1', label: 'baseline metrics', color: 'var(--color-tertiary)' },
+        { value: 'E2E', label: 'implementation', color: 'var(--color-accent-bright)' },
+      ],
+      capabilities: [
+        { title: 'Custom AI Tooling', desc: 'Bespoke solutions built for your specific workflows.' },
+        { title: 'Change Management', desc: 'Upskill your people. Transform the culture.' },
+        { title: 'Continuous ROI Tracking', desc: 'Measurable outcomes, not theoretical projections.' },
+      ],
+    },
+    engineering: {
+      title: 'AI Engineering',
+      tagline: 'Ship faster. Pay for output.',
+      desc: 'Elite engineering squads leveraging AI-accelerated workflows. Subscription-style pods that deliver production-grade software.',
+      metrics: [
+        { value: '3x', label: 'shipping velocity', color: 'var(--color-secondary)' },
+        { value: 'Pod', label: 'dedicated team', color: 'var(--color-tertiary)' },
+        { value: '$0/hr', label: 'outcome pricing', color: 'var(--color-accent-bright)' },
+      ],
+      capabilities: [
+        { title: 'Dedicated Engineering Pods', desc: 'PM + engineers integrated into your stack.' },
+        { title: 'Sprint-Based Delivery', desc: 'You choose priorities. We ship features.' },
+        { title: 'AI-Accelerated Workflows', desc: '10x engineers powered by cutting-edge AI tooling.' },
+      ],
+    },
+  }
+
+  const c = content[view]
+
   return (
-    <div className="flex flex-col justify-between h-full">
-      <div>
-        <p className="text-[12px] font-medium text-[var(--color-text-secondary)] tracking-wide mb-6">integrateagents.ai</p>
-        <h2 className="text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] font-bold leading-[1.05] tracking-[-0.03em] text-[var(--color-text)]">
-          {c.title}
-        </h2>
-        <p className="mt-5 text-[14px] text-[var(--color-text-secondary)] leading-[1.7] max-w-md">
-          {c.body}
-        </p>
-        <ul className="mt-6 space-y-3">
-          {c.bullets.map((b, i) => (
-            <li key={i} className="flex items-start gap-3 text-[13px] text-[var(--color-text)]">
-              <span className="mt-1 w-1.5 h-1.5 bg-[var(--color-secondary)] flex-shrink-0" />
-              <span className="leading-[1.6]">{b}</span>
-            </li>
-          ))}
-        </ul>
+    <div className="flex flex-col h-full">
+      <div className="flex items-center gap-4 mb-6">
+        <button onClick={onBack} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <p className="text-[13px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase">{c.tagline}</p>
+      </div>
+
+      <h2 className="text-[2.8rem] sm:text-[3.2rem] md:text-[3.8rem] font-black leading-[1.0] tracking-[-0.04em] text-[var(--color-text)] mb-4">
+        {c.title}
+      </h2>
+      <p className="text-[15px] text-[var(--color-text-secondary)] leading-[1.7] max-w-lg mb-6">
+        {c.desc}
+      </p>
+
+      {/* Metrics row */}
+      <div className="flex gap-3 mb-8">
+        {c.metrics.map((m, i) => (
+          <div key={i} className="flex-1 border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-4">
+            <p className="text-[1.5rem] font-black leading-none" style={{ color: m.color }}>{m.value}</p>
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1.5 uppercase tracking-wider">{m.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Capability cards */}
+      <div className="flex-1 grid grid-cols-3 gap-3">
+        {c.capabilities.map((cap, i) => (
+          <div key={i} className="border border-[var(--color-border)] p-4 flex flex-col group hover:border-[var(--color-border-highlight)] transition-colors">
+            <div className="w-6 h-0.5 mb-3" style={{ backgroundColor: i === 0 ? 'var(--color-secondary)' : i === 1 ? 'var(--color-tertiary)' : 'var(--color-accent-bright)' }} />
+            <p className="text-[14px] font-bold text-[var(--color-text)] mb-1.5">{cap.title}</p>
+            <p className="text-[12px] text-[var(--color-text-secondary)] leading-[1.6]">{cap.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
-function ContactContent() {
+function ContactContent({ onBack }: { onBack: () => void }) {
   const [sent, setSent] = useState(false)
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>()
   const onSubmit = async (data: FormData) => {
@@ -101,49 +159,57 @@ function ContactContent() {
     await new Promise(r => setTimeout(r, 600))
     setSent(true)
   }
-  const input = 'w-full border border-[var(--color-border)] bg-transparent px-3 py-2.5 text-[13px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)]/40 transition-colors'
+  const input = 'w-full border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-4 py-3 text-[14px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-secondary)]/50 transition-colors'
 
   if (sent) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
-        <div className="w-10 h-10 bg-[var(--color-secondary-muted)] flex items-center justify-center mb-4">
-          <svg className="w-5 h-5 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div className="w-12 h-12 bg-[var(--color-secondary-muted)] flex items-center justify-center mb-5">
+          <svg className="w-6 h-6 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h3 className="text-lg font-bold text-[var(--color-text)]">We'll be in touch.</h3>
-        <p className="mt-1 text-[13px] text-[var(--color-text-secondary)]">Expect a response within 24 hours.</p>
+        <h3 className="text-[1.5rem] font-bold text-[var(--color-text)]">We'll be in touch.</h3>
+        <p className="mt-2 text-[14px] text-[var(--color-text-secondary)]">Expect a response within 24 hours.</p>
       </div>
     )
   }
 
   return (
     <div className="flex flex-col h-full">
-      <p className="text-[12px] font-medium text-[var(--color-text-secondary)] tracking-wide mb-4">Get started</p>
-      <h2 className="text-[1.75rem] sm:text-[2rem] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--color-text)] mb-6">
-        Tell us about<br />your business.
+      <div className="flex items-center gap-4 mb-6">
+        <button onClick={onBack} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <p className="text-[13px] font-medium text-[var(--color-secondary)] tracking-[0.15em] uppercase">Get Started</p>
+      </div>
+
+      <h2 className="text-[2.4rem] sm:text-[2.8rem] font-black leading-[1.05] tracking-[-0.03em] text-[var(--color-text)] mb-2">
+        Tell us about your business.
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col gap-3">
-        <div className="grid grid-cols-2 gap-3">
+      <p className="text-[14px] text-[var(--color-text-secondary)] mb-8">We respond within 24 hours. No spam, no obligation.</p>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <input {...register('name', { required: true })} className={input} placeholder="Name *" />
-            {errors.name && <p className="mt-0.5 text-[10px] text-red-400">Required</p>}
+            {errors.name && <p className="mt-1 text-[11px] text-[var(--color-tertiary)]">Required</p>}
           </div>
           <div>
             <input type="email" {...register('email', { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ })} className={input} placeholder="Work email *" />
-            {errors.email && <p className="mt-0.5 text-[10px] text-red-400">Required</p>}
+            {errors.email && <p className="mt-1 text-[11px] text-[var(--color-tertiary)]">Required</p>}
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <input {...register('company', { required: true })} className={input} placeholder="Company *" />
-            {errors.company && <p className="mt-0.5 text-[10px] text-red-400">Required</p>}
+            {errors.company && <p className="mt-1 text-[11px] text-[var(--color-tertiary)]">Required</p>}
           </div>
           <input {...register('role')} className={input} placeholder="Role" />
         </div>
         <div className="flex-1">
-          <textarea {...register('needs', { required: true })} className={`${input} h-full min-h-[80px] resize-none`} placeholder="What challenges are you facing? *" />
-          {errors.needs && <p className="mt-0.5 text-[10px] text-red-400">Required</p>}
+          <textarea {...register('needs', { required: true })} className={`${input} h-full min-h-[100px] resize-none`} placeholder="What challenges are you facing? *" />
+          {errors.needs && <p className="mt-1 text-[11px] text-[var(--color-tertiary)]">Required</p>}
         </div>
-        <button type="submit" disabled={isSubmitting} className="w-full py-2.5 text-[13px] font-medium bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] transition-colors disabled:opacity-60 cursor-pointer">
+        <button type="submit" disabled={isSubmitting} className="w-full py-3.5 text-[15px] font-bold bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] transition-colors disabled:opacity-60 cursor-pointer tracking-wide">
           {isSubmitting ? 'Sending...' : 'Submit'}
         </button>
       </form>
@@ -153,88 +219,87 @@ function ContactContent() {
 
 export default function App() {
   const [view, setView] = useState<View>('home')
-  const { theme, toggle } = useTheme()
 
   return (
     <div className="grid-texture h-screen w-screen overflow-hidden">
       <CircuitGrid />
 
-      {/* Theme toggle - top right */}
-      <button onClick={toggle} aria-label="Toggle theme" className="fixed top-5 right-5 z-50 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer">
-        {theme === 'dark' ? (
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        ) : (
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        )}
-      </button>
+      <div className="relative z-10 h-full flex items-center justify-center px-5 sm:px-8 py-5">
+        <div className="w-full max-w-[1100px] h-[min(88vh,720px)] flex gap-3">
 
-      {/* Main two-panel layout */}
-      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 py-6">
-        <div className="w-full max-w-[960px] h-[min(85vh,640px)] flex gap-3">
-
-          {/* Left panel - content area */}
+          {/* Left panel */}
           <div className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border)] p-8 sm:p-10 relative overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div key={view} {...fade} className="h-full">
                 {view === 'home' && <HomeContent />}
-                {view === 'contact' && <ContactContent />}
+                {view === 'contact' && <ContactContent onBack={() => setView('home')} />}
                 {(view === 'strategy' || view === 'transformation' || view === 'engineering') && (
-                  <ServiceContent view={view} />
+                  <ServiceContent view={view} onBack={() => setView('home')} />
                 )}
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Right panel - navigation boxes */}
-          <div className="w-[280px] sm:w-[320px] flex flex-col gap-3 flex-shrink-0">
-            {NAV_ITEMS.map(item => (
-              <button
-                key={item.id}
-                onClick={() => setView(view === item.id ? 'home' : item.id)}
-                className={`flex-1 text-left p-5 border transition-all cursor-pointer group ${
-                  view === item.id
-                    ? 'bg-[var(--color-card-light)] border-transparent'
-                    : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <span className={`mt-0.5 w-6 h-6 flex items-center justify-center flex-shrink-0 ${
-                    view === item.id ? 'bg-[var(--color-card-light-text)]/10' : 'bg-[var(--color-accent-muted)]'
+          {/* Right panel */}
+          <div className="w-[260px] sm:w-[290px] flex flex-col gap-3 flex-shrink-0">
+            {([
+              { id: 'strategy' as View, title: 'Strategy', desc: 'AI audits and execution-ready roadmaps', icon: '◆' },
+              { id: 'transformation' as View, title: 'Transformation', desc: 'End-to-end AI deployment with measurable ROI', icon: '◈' },
+              { id: 'engineering' as View, title: 'Engineering', desc: 'Elite pods shipping production-grade software', icon: '▣' },
+            ]).map((item, idx) => {
+              const isActive = view === item.id
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setView(isActive ? 'home' : item.id)}
+                  className={`flex-1 text-left p-5 border transition-all cursor-pointer relative overflow-hidden ${
+                    isActive
+                      ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
+                      : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-border-highlight)] hover:bg-[var(--color-surface-elevated)]'
+                  }`}
+                >
+                  {/* Color accent stripe */}
+                  <div className="absolute top-0 left-0 w-full h-[2px]" style={{
+                    backgroundColor: idx === 0 ? 'var(--color-secondary)' : idx === 1 ? 'var(--color-tertiary)' : 'var(--color-accent-bright)',
+                    opacity: isActive ? 0 : 1,
+                  }} />
+                  <p className={`text-[11px] font-medium tracking-[0.15em] uppercase mb-2 ${
+                    isActive ? 'text-white/60' : 'text-[var(--color-text-muted)]'
                   }`}>
-                    <svg className={`w-3.5 h-3.5 ${view === item.id ? 'text-[var(--color-card-light-text)]' : 'text-[var(--color-accent)]'}`} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 8h10M9 4l4 4-4 4"/>
-                    </svg>
-                  </span>
-                  <div>
-                    <p className={`text-[15px] font-bold ${
-                      view === item.id ? 'text-[var(--color-card-light-text)]' : 'text-[var(--color-text)]'
-                    }`}>
-                      {item.stat}
-                    </p>
-                    <p className={`text-[11px] leading-[1.5] mt-1 ${
-                      view === item.id ? 'text-[var(--color-card-light-text)]/70' : 'text-[var(--color-text-secondary)]'
-                    }`}>
-                      {item.label}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            ))}
+                    {item.icon}
+                  </p>
+                  <p className={`text-[16px] font-bold mb-1 ${
+                    isActive ? 'text-white' : 'text-[var(--color-text)]'
+                  }`}>
+                    {item.title}
+                  </p>
+                  <p className={`text-[12px] leading-[1.5] ${
+                    isActive ? 'text-white/70' : 'text-[var(--color-text-secondary)]'
+                  }`}>
+                    {item.desc}
+                  </p>
+                </button>
+              )
+            })}
 
-            {/* CTA box */}
+            {/* CTA */}
             <button
               onClick={() => setView(view === 'contact' ? 'home' : 'contact')}
-              className={`text-left p-5 border transition-all cursor-pointer ${
+              className={`text-left p-5 border transition-all cursor-pointer relative overflow-hidden ${
                 view === 'contact'
-                  ? 'bg-[var(--color-accent)] border-transparent'
-                  : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-border-highlight)]'
+                  ? 'bg-[var(--color-secondary)] border-[var(--color-secondary)]'
+                  : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-secondary)]/40'
               }`}
             >
-              <p className="text-[12px] font-medium text-white/70 tracking-wide">integrateagents.ai</p>
-              <p className={`text-[1.25rem] font-bold leading-[1.15] mt-2 ${
-                view === 'contact' ? 'text-white' : 'text-[var(--color-text)]'
+              <p className={`text-[11px] font-medium tracking-[0.15em] uppercase mb-2 ${
+                view === 'contact' ? 'text-black/60' : 'text-[var(--color-secondary)]'
               }`}>
-                Get Started
+                integrateagents.ai
+              </p>
+              <p className={`text-[18px] font-black leading-[1.15] ${
+                view === 'contact' ? 'text-black' : 'text-[var(--color-text)]'
+              }`}>
+                Get Started &rarr;
               </p>
             </button>
           </div>
@@ -242,7 +307,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-0 inset-x-0 z-10 flex items-center justify-center py-4">
+      <div className="fixed bottom-0 inset-x-0 z-10 flex items-center justify-center h-10">
         <p className="text-[11px] text-[var(--color-text-muted)]">
           &copy; {new Date().getFullYear()} Integrated Agents &middot; contact@integrateagents.ai
         </p>
