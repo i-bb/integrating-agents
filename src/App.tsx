@@ -190,7 +190,6 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   )
 }
 
-const HOVER_FILL = 1.5
 const HOVER_ACTIVATE = 10
 
 function NavButton({ item, isActive, onActivate }: {
@@ -237,19 +236,19 @@ function NavButton({ item, isActive, onActivate }: {
           className="absolute inset-0 bg-[var(--color-btn-active)] origin-left"
           style={{
             transform: hovering ? 'scaleX(1)' : 'scaleX(0)',
-            transition: hovering ? `transform ${HOVER_FILL}s linear` : 'transform 0.25s ease-out',
+            transition: hovering ? 'transform 0.15s ease-out' : 'transform 0.25s ease-out',
           }}
         />
       )}
       <div className="relative z-10">
         <p className={`text-[15px] sm:text-[17px] font-bold leading-tight transition-colors ${
           isActive ? 'text-white' : hovering ? 'text-white' : 'text-[var(--color-text)]'
-        }`} style={{ transitionDuration: hovering ? `${HOVER_FILL * 0.3}s` : '0.25s' }}>
+        }`} style={{ transitionDuration: '0.15s' }}>
           {item.title}
         </p>
         <p className={`text-[13px] sm:text-[14px] leading-[1.5] mt-2 transition-colors ${
           isActive ? 'text-white/70' : hovering ? 'text-white/70' : 'text-[var(--color-text-secondary)]'
-        }`} style={{ transitionDuration: hovering ? `${HOVER_FILL * 0.3}s` : '0.25s' }}>
+        }`} style={{ transitionDuration: '0.15s' }}>
           {item.desc}
         </p>
       </div>
@@ -303,7 +302,7 @@ function CtaButton({ isActive, onActivate }: { isActive: boolean; onActivate: ()
         className={`mt-3 h-[1px] ${isActive ? 'bg-white/20 w-full' : 'bg-[var(--color-accent)]'}`}
         style={!isActive ? {
           width: hovering ? '100%' : '32px',
-          transition: hovering ? `width ${HOVER_FILL}s linear` : 'width 0.25s ease-out',
+          transition: hovering ? 'width 0.15s ease-out' : 'width 0.25s ease-out',
         } : undefined}
       />
     </button>
