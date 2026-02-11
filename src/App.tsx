@@ -26,25 +26,11 @@ function HomeContent() {
         <span className="text-[var(--color-secondary)]">AI-native.</span>
       </h1>
       <p className="mt-6 text-[14px] sm:text-[15px] text-white/50 leading-[1.7] max-w-md">
-        The cost of intelligence is approaching zero. The companies that rewire around it now will dominate the next decade. The rest will be disrupted.
+        Every competitor in your space is figuring this out right now. The ones who move first will set the terms. The ones who wait will spend the next decade catching up.
       </p>
-      <p className="mt-3 text-[14px] sm:text-[15px] text-white/50 leading-[1.7] max-w-md">
-        We set and execute your enterprise AI strategy at startup speed. No 200-slide decks. No 6-month timelines. Just business impact.
+      <p className="mt-4 text-[13px] text-white/35 leading-[1.7] max-w-md">
+        We work with a small number of companies at a time. If you're serious, let's talk.
       </p>
-      <div className="flex gap-6 mt-8">
-        <div>
-          <p className="text-[1.5rem] font-black text-[var(--color-secondary)] leading-none">25%</p>
-          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">cost reduction</p>
-        </div>
-        <div>
-          <p className="text-[1.5rem] font-black text-[var(--color-tertiary)] leading-none">3x</p>
-          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">shipping velocity</p>
-        </div>
-        <div>
-          <p className="text-[1.5rem] font-black text-[var(--color-accent-bright)] leading-none">&lt;90d</p>
-          <p className="text-[10px] text-white/35 mt-1 uppercase tracking-wider">to measurable ROI</p>
-        </div>
-      </div>
     </div>
   )
 }
@@ -53,47 +39,47 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
   const content = {
     strategy: {
       title: 'AI Strategy',
-      tagline: 'No 200-slide decks. No 6-month timelines.',
-      desc: 'We run 30, 60, or 90-day audits across every function in your business, surface the highest-ROI AI use cases, quantify the impact, and hand you an execution roadmap your team can run with tomorrow.',
+      tagline: 'You have AI opportunities worth millions. You just can\'t see them yet.',
+      desc: 'We find the highest-value AI opportunities hiding in your business and give you a clear plan to capture them. No bloated consulting engagement. No death by PowerPoint. Just a sharp, honest assessment of where AI will actually move your numbers.',
       metrics: [
-        { value: '30-90d', label: 'audit to roadmap', color: 'var(--color-secondary)' },
-        { value: '20+', label: 'use cases ranked', color: 'var(--color-tertiary)' },
-        { value: '100%', label: 'execution-ready', color: 'var(--color-accent-bright)' },
+        { value: 'Every function', label: 'analyzed', color: 'var(--color-secondary)' },
+        { value: 'ROI-ranked', label: 'opportunities', color: 'var(--color-tertiary)' },
+        { value: 'Execution-ready', label: 'deliverable', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Holistic Audits', desc: 'Every department, every workflow, every bottleneck. We find the money.' },
-        { title: 'ROI-Quantified Use Cases', desc: 'Ranked by business impact and implementation feasibility. No guesswork.' },
-        { title: 'AI Adoption Report', desc: 'A crisp deliverable with technical appendix. Run it yourself or hand it back to us.' },
+        { title: 'Where the money is', desc: 'We go function by function and find the AI opportunities your team is too busy to see.' },
+        { title: 'What to build first', desc: 'Every opportunity ranked by impact and feasibility. You know exactly where to start.' },
+        { title: 'How to execute', desc: 'A plan your team can run with tomorrow, or hand back to us.' },
       ],
     },
     transformation: {
       title: 'AI Transformation',
-      tagline: 'Product. Process. People.',
-      desc: 'We become your Chief AI Officer. Embed with your team, deploy AI across your entire operation, track baseline metrics from day one, and make sure your people actually adopt it.',
+      tagline: 'AI-native isn\'t a buzzword. It\'s an operating model.',
+      desc: 'We embed with your team and rewire how your company operates. We don\'t leave until the new way of working is the default, not the exception.',
       metrics: [
-        { value: '25%', label: 'cost reduction', color: 'var(--color-secondary)' },
-        { value: 'Day 1', label: 'baseline metrics', color: 'var(--color-tertiary)' },
-        { value: 'E2E', label: 'strategy to execution', color: 'var(--color-accent-bright)' },
+        { value: 'Product', label: 'transformation', color: 'var(--color-secondary)' },
+        { value: 'Process', label: 'transformation', color: 'var(--color-tertiary)' },
+        { value: 'People', label: 'transformation', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Process Automation', desc: 'We are bomb-sniffing dogs for inefficiency. Find bottlenecks. Fix them. Put money back in your pocket.' },
-        { title: 'Custom AI Tooling', desc: 'Off-the-shelf where it works, custom-built where it matters. Deployed into your existing stack.' },
-        { title: 'People Upskilling', desc: 'Bespoke curricula and hands-on workshops that get your teams thinking AI-first. Adoption is the real ROI.' },
+        { title: 'Eliminate bottlenecks', desc: 'We find the inefficiencies costing you money and replace them with AI-driven workflows.' },
+        { title: 'Deploy the right tools', desc: 'Off-the-shelf where it works. Custom-built where it matters. No tool religion.' },
+        { title: 'Get your people on board', desc: 'Technology without adoption is waste. We make sure your teams actually use what we build.' },
       ],
     },
     engineering: {
       title: 'AI Engineering',
-      tagline: 'Pay for output, not hours.',
-      desc: 'Outcome-based engineering pods that ship production-grade software at 3x velocity. World-class engineers who use AI as a force multiplier. You pay for features delivered, not hours logged.',
+      tagline: 'World-class engineering, without the world-class hiring timeline.',
+      desc: 'Our engineering teams use AI as a force multiplier to build production-grade software faster than you thought possible. We become part of your team. You pay for what we ship.',
       metrics: [
-        { value: '3x', label: 'shipping velocity', color: 'var(--color-secondary)' },
-        { value: '2wk', label: 'sprint cycles', color: 'var(--color-tertiary)' },
-        { value: '$0/hr', label: 'outcome pricing', color: 'var(--color-accent-bright)' },
+        { value: 'Dedicated', label: 'teams', color: 'var(--color-secondary)' },
+        { value: 'AI-accelerated', label: 'delivery', color: 'var(--color-tertiary)' },
+        { value: 'Outcome-priced', label: 'model', color: 'var(--color-accent-bright)' },
       ],
       capabilities: [
-        { title: 'Dedicated Pods', desc: 'PM + forward-deployed engineers integrated into your stack, Slack, and sprint tracker.' },
-        { title: 'Full-Stack Delivery', desc: 'Applications, model fine-tuning, data engineering, agentic solutions, code migrations.' },
-        { title: 'Aligned Incentives', desc: 'We pay our team on story points completed. Everyone is aligned on output and speed.' },
+        { title: 'Full-stack delivery', desc: 'Applications, AI tooling, data engineering, migrations. Whatever you need built.' },
+        { title: 'Integrated into your workflow', desc: 'Your stack, your sprint tracker, your Slack. We slot in, not bolt on.' },
+        { title: 'Aligned on output', desc: 'We succeed when you ship. Every incentive points at the same thing: results.' },
       ],
     },
   }
@@ -119,7 +105,7 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
       <div className="flex flex-col sm:flex-row gap-2.5 mb-6">
         {c.metrics.map((m, i) => (
           <div key={i} className="flex-1 border border-white/10 bg-white/5 p-3 card-inner">
-            <p className="text-[1.3rem] font-black leading-none" style={{ color: m.color }}>{m.value}</p>
+            <p className="text-[14px] font-black leading-tight" style={{ color: m.color }}>{m.value}</p>
             <p className="text-[10px] text-white/40 mt-1 uppercase tracking-wider">{m.label}</p>
           </div>
         ))}
@@ -204,7 +190,8 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   )
 }
 
-const HOVER_DURATION = 10
+const HOVER_FILL = 1.5
+const HOVER_ACTIVATE = 10
 
 function NavButton({ item, isActive, onActivate }: {
   item: { id: View; title: string; desc: string }
@@ -220,7 +207,7 @@ function NavButton({ item, isActive, onActivate }: {
     timerRef.current = setTimeout(() => {
       onActivate(item.id)
       setHovering(false)
-    }, HOVER_DURATION * 1000)
+    }, HOVER_ACTIVATE * 1000)
   }, [isActive, item.id, onActivate])
 
   const handleLeave = useCallback(() => {
@@ -250,19 +237,19 @@ function NavButton({ item, isActive, onActivate }: {
           className="absolute inset-0 bg-[var(--color-btn-active)] origin-left"
           style={{
             transform: hovering ? 'scaleX(1)' : 'scaleX(0)',
-            transition: hovering ? `transform ${HOVER_DURATION}s linear` : 'transform 0.25s ease-out',
+            transition: hovering ? `transform ${HOVER_FILL}s linear` : 'transform 0.25s ease-out',
           }}
         />
       )}
       <div className="relative z-10">
         <p className={`text-[15px] sm:text-[17px] font-bold leading-tight transition-colors ${
           isActive ? 'text-white' : hovering ? 'text-white' : 'text-[var(--color-text)]'
-        }`} style={{ transitionDuration: hovering ? `${HOVER_DURATION * 0.3}s` : '0.25s' }}>
+        }`} style={{ transitionDuration: hovering ? `${HOVER_FILL * 0.3}s` : '0.25s' }}>
           {item.title}
         </p>
         <p className={`text-[13px] sm:text-[14px] leading-[1.5] mt-2 transition-colors ${
           isActive ? 'text-white/70' : hovering ? 'text-white/70' : 'text-[var(--color-text-secondary)]'
-        }`} style={{ transitionDuration: hovering ? `${HOVER_DURATION * 0.3}s` : '0.25s' }}>
+        }`} style={{ transitionDuration: hovering ? `${HOVER_FILL * 0.3}s` : '0.25s' }}>
           {item.desc}
         </p>
       </div>
@@ -280,7 +267,7 @@ function CtaButton({ isActive, onActivate }: { isActive: boolean; onActivate: ()
     timerRef.current = setTimeout(() => {
       onActivate()
       setHovering(false)
-    }, HOVER_DURATION * 1000)
+    }, HOVER_ACTIVATE * 1000)
   }, [isActive, onActivate])
 
   const handleLeave = useCallback(() => {
@@ -316,7 +303,7 @@ function CtaButton({ isActive, onActivate }: { isActive: boolean; onActivate: ()
         className={`mt-3 h-[1px] ${isActive ? 'bg-white/20 w-full' : 'bg-[var(--color-accent)]'}`}
         style={!isActive ? {
           width: hovering ? '100%' : '32px',
-          transition: hovering ? `width ${HOVER_DURATION}s linear` : 'width 0.25s ease-out',
+          transition: hovering ? `width ${HOVER_FILL}s linear` : 'width 0.25s ease-out',
         } : undefined}
       />
     </button>
@@ -327,9 +314,9 @@ export default function App() {
   const [view, setView] = useState<View>('home')
 
   const navItems: { id: View; title: string; desc: string }[] = [
-    { id: 'strategy', title: 'Strategy', desc: 'Surface the highest-ROI AI use cases in 90 days or less' },
-    { id: 'transformation', title: 'Transformation', desc: 'Rewire your product, process, and people around AI' },
-    { id: 'engineering', title: 'Engineering', desc: 'Ship 3x faster with outcome-priced engineering pods' },
+    { id: 'strategy', title: 'Strategy', desc: 'Know exactly where AI will make you money' },
+    { id: 'transformation', title: 'Transformation', desc: 'Become the company your competitors are afraid of' },
+    { id: 'engineering', title: 'Engineering', desc: 'Ship what your team can\'t, at a speed they didn\'t think possible' },
   ]
 
   return (
