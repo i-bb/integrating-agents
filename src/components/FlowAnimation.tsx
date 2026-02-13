@@ -140,7 +140,7 @@ const pathVariants = {
   visible: (delay: number) => ({
     pathLength: 1,
     opacity: 1,
-    transition: { pathLength: { duration: 1.2, ease: 'easeInOut', delay }, opacity: { duration: 0.2, delay } },
+    transition: { pathLength: { duration: 1.2, ease: 'easeInOut' as const, delay }, opacity: { duration: 0.2, delay } },
   }),
 }
 
@@ -149,7 +149,7 @@ const nodeVariants = {
   visible: (delay: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const, delay },
   }),
 }
 
