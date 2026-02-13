@@ -29,10 +29,10 @@ export default function Navbar() {
       <nav className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
         <a href="#" className="flex items-center gap-3 group">
           <span className="inline-flex items-center justify-center w-7 h-7 border border-[var(--color-accent)] bg-[var(--color-accent)] transition-colors">
-            <span className="font-display text-[14px] leading-none text-white tracking-[-0.02em]" style={{ paddingTop: '1px' }}>ia</span>
+            <span className="font-display text-[14px] leading-none text-white tracking-[-0.02em]" style={{ paddingTop: '1px' }}>LM</span>
           </span>
           <span className="font-display text-[17px] tracking-[-0.02em] text-[var(--color-text)] group-hover:text-[var(--color-secondary)] transition-colors">
-            Integrated Agents
+            Last Mile
           </span>
         </a>
 

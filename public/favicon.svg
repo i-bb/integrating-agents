@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
   <rect width="32" height="32" fill="#1A3A6B"/>
-  <!-- Ascending staircase: 4 steps, bottom-left to top-right -->
-  <rect x="3" y="24" width="7" height="5" fill="#C47D5A"/>
-  <rect x="10" y="19" width="7" height="10" fill="#D4A853"/>
-  <rect x="17" y="14" width="7" height="15" fill="#D4A853"/>
-  <rect x="24" y="9" width="5" height="20" fill="#C47D5A"/>
-  <!-- Step edges for z-depth -->
-  <line x1="10" y1="19" x2="10" y2="24" stroke="#1A3A6B" stroke-width="0.5"/>
-  <line x1="17" y1="14" x2="17" y2="19" stroke="#1A3A6B" stroke-width="0.5"/>
-  <line x1="24" y1="9" x2="24" y2="14" stroke="#1A3A6B" stroke-width="0.5"/>
+  <!-- Three converging paths narrowing to a single point -->
+  <path d="M4 8 L24 15" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M4 16 L24 16" stroke="#C47D5A" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M4 24 L24 17" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Convergence point -->
+  <circle cx="26" cy="16" r="3" fill="#C47D5A"/>
+  <circle cx="26" cy="16" r="1.5" fill="#D4A853"/>
 </svg>
