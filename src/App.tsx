@@ -20,14 +20,14 @@ function HomeContent() {
   return (
     <div className="flex flex-col lg:h-full">
       <div className="flex flex-col justify-center flex-1 lg:flex-none lg:pt-4">
-        <p className="text-[12px] sm:text-[13px] font-semibold text-white/60 tracking-[0.15em] uppercase mb-4 sm:mb-5">
+        <p className="text-[13px] sm:text-[14px] font-semibold text-white/80 tracking-[0.15em] uppercase mb-4 sm:mb-5">
           Last Mile
         </p>
         <h1 className="text-[2rem] sm:text-[3.2rem] md:text-[4rem] lg:text-[3.6rem] font-black leading-[1.05] sm:leading-[1.0] tracking-[-0.03em] sm:tracking-[-0.04em] text-white">
           AI gets you close.<br />We get you<br />
           <span className="text-[var(--color-secondary)]">the rest of the way.</span>
         </h1>
-        <p className="mt-4 sm:mt-5 text-[14px] sm:text-[16px] text-white/80 leading-[1.7] max-w-lg">
+        <p className="mt-4 sm:mt-5 text-[15px] sm:text-[17px] text-white/90 leading-[1.7] max-w-lg">
           Your AI tools are live. Your team is trained. But the results you were promised still aren't showing up. It all lives in the last mile. That's where every enterprise gets stuck. And that's our specialty.
         </p>
       </div>
@@ -174,13 +174,13 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
       <h2 className="text-[2rem] sm:text-[2.6rem] md:text-[3rem] font-black leading-[1.0] tracking-[-0.04em] text-white mb-3">
         {c.title}
       </h2>
-      <p className="text-[15px] text-white/80 leading-[1.6] max-w-xl mb-3">
+      <p className="text-[16px] text-white/90 leading-[1.6] max-w-xl mb-3">
         {c.intro}
       </p>
 
       <ul className="space-y-1.5 mb-5">
         {c.bullets.map((b, i) => (
-          <li key={i} className="flex items-start gap-2.5 text-[14px] text-white/85">
+          <li key={i} className="flex items-start gap-2.5 text-[15px] text-white/90">
             <svg className="mt-0.5 w-4 h-4 flex-shrink-0 text-[var(--color-secondary)]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="2 8 6 12 14 4"/></svg>
             <span className="leading-[1.4]">{b}</span>
           </li>
@@ -192,9 +192,9 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
           <div key={i} className="border border-white/12 bg-white/[0.07] p-4 card-inner relative">
             <div className="flex items-baseline gap-2 mb-2">
               <span className="text-[22px] font-black leading-none" style={{ color: stepColors[i] }}>{p.step}</span>
-              <span className="text-[14px] font-bold text-white">{p.label}</span>
+              <span className="text-[15px] font-bold text-white">{p.label}</span>
             </div>
-            <p className="text-[13px] text-white/70 leading-[1.5]">{p.detail}</p>
+            <p className="text-[14px] text-white/85 leading-[1.5]">{p.detail}</p>
             {i < 2 && (
               <div className="hidden sm:block absolute top-1/2 -right-[9px] -translate-y-1/2 z-10">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -211,17 +211,17 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
               <div className="w-9 h-9 flex items-center justify-center border border-white/10 bg-white/[0.05] flex-shrink-0" style={{ color: stepColors[i] }}>
                 {cap.icon}
               </div>
-              <p className="text-[14px] font-bold text-white">{cap.title}</p>
+              <p className="text-[15px] font-bold text-white">{cap.title}</p>
             </div>
-            <p className="text-[13px] text-white/70 leading-[1.55] mb-3">{cap.desc}</p>
+            <p className="text-[14px] text-white/85 leading-[1.55] mb-3">{cap.desc}</p>
             <div className="flex flex-wrap gap-1.5 mb-4">
               {cap.tags.map((tag, j) => (
-                <span key={j} className="text-[11px] font-medium px-2 py-1 border border-white/10 bg-white/[0.04] text-white/65">{tag}</span>
+                <span key={j} className="text-[12px] font-medium px-2 py-1 border border-white/10 bg-white/[0.04] text-white/80">{tag}</span>
               ))}
             </div>
             <div className="border-t border-white/10 pt-3 mt-auto">
               <p className="text-[17px] font-black leading-none" style={{ color: stepColors[i] }}>{cap.stat}</p>
-              <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider">{cap.statLabel}</p>
+              <p className="text-[12px] text-white/70 mt-1 uppercase tracking-wider">{cap.statLabel}</p>
             </div>
           </div>
         ))}
@@ -238,7 +238,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
     await new Promise(r => setTimeout(r, 600))
     setSent(true)
   }
-  const input = 'w-full border border-white/20 bg-white/[0.08] px-4 py-3 text-[14px] text-white placeholder:text-white/50 focus:outline-none focus:border-[var(--color-secondary)]/60 focus:bg-white/[0.1] transition-all card-inner'
+  const input = 'w-full border border-white/20 bg-white/[0.08] px-4 py-3 text-[15px] text-white placeholder:text-white/50 focus:outline-none focus:border-[var(--color-secondary)]/60 focus:bg-white/[0.1] transition-all card-inner'
 
   if (sent) {
     return (
@@ -247,7 +247,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
           <svg className="w-7 h-7 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h3 className="text-[1.5rem] font-black text-white">We'll be in touch.</h3>
-        <p className="mt-2 text-[15px] text-white/70 max-w-sm">Expect a response within 24 hours. We'll come prepared with questions specific to your business.</p>
+        <p className="mt-2 text-[16px] text-white/85 max-w-sm">Expect a response within 24 hours. We'll come prepared with questions specific to your business.</p>
       </div>
     )
   }
@@ -264,43 +264,43 @@ function ContactContent({ onBack }: { onBack: () => void }) {
       <h2 className="text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] font-black leading-[1.05] tracking-[-0.03em] text-white mb-2">
         Let's talk.
       </h2>
-      <p className="text-[15px] text-white/80 mb-6 max-w-lg">
+      <p className="text-[16px] text-white/90 mb-6 max-w-lg">
         Tell us where you're stuck. We'll respond within 24 hours with a perspective on how to move forward.
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col gap-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Name *</label>
+            <label className="block text-[12px] font-semibold text-white/80 uppercase tracking-wider mb-1.5">Name *</label>
             <input {...register('name', { required: true })} className={input} placeholder="Full name" />
             {errors.name && <p className="mt-1.5 text-[11px] text-[var(--color-tertiary)]">Required</p>}
           </div>
           <div>
-            <label className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Work Email *</label>
+            <label className="block text-[12px] font-semibold text-white/80 uppercase tracking-wider mb-1.5">Work Email *</label>
             <input type="email" {...register('email', { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ })} className={input} placeholder="you@company.com" />
             {errors.email && <p className="mt-1.5 text-[11px] text-[var(--color-tertiary)]">Valid work email required</p>}
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Company *</label>
+            <label className="block text-[12px] font-semibold text-white/80 uppercase tracking-wider mb-1.5">Company *</label>
             <input {...register('company', { required: true })} className={input} placeholder="Company name" />
             {errors.company && <p className="mt-1.5 text-[11px] text-[var(--color-tertiary)]">Required</p>}
           </div>
           <div>
-            <label className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Role</label>
+            <label className="block text-[12px] font-semibold text-white/80 uppercase tracking-wider mb-1.5">Role</label>
             <input {...register('role')} className={input} placeholder="Your title" />
           </div>
         </div>
         <div className="flex-1 flex flex-col">
-          <label className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">What's the challenge? *</label>
+          <label className="block text-[12px] font-semibold text-white/80 uppercase tracking-wider mb-1.5">What's the challenge? *</label>
           <textarea {...register('needs', { required: true })} className={`${input} flex-1 min-h-[100px] resize-none`} placeholder="What are you trying to accomplish with AI? Where are things falling short?" />
           {errors.needs && <p className="mt-1.5 text-[11px] text-[var(--color-tertiary)]">Required</p>}
         </div>
         <button type="submit" disabled={isSubmitting} className="w-full py-3.5 text-[15px] font-bold bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] transition-all disabled:opacity-60 cursor-pointer tracking-wide card-inner hover:translate-y-[-1px]">
           {isSubmitting ? 'Sending...' : 'Send'}
         </button>
-        <p className="text-[12px] text-white/40 text-center">No spam. No obligation. Just a conversation.</p>
+        <p className="text-[13px] text-white/60 text-center">No spam. No obligation. Just a conversation.</p>
       </form>
     </div>
   )
@@ -362,8 +362,8 @@ function NavButton({ item, isActive, onActivate }: {
         }`} style={{ transitionDuration: '0.15s' }}>
           {item.title}
         </p>
-        <p className={`text-[14px] sm:text-[15px] leading-[1.5] mt-2 transition-colors ${
-          isActive ? 'text-white/85' : hovering ? 'text-white/85' : 'text-[var(--color-text-secondary)]'
+        <p className={`text-[15px] sm:text-[16px] leading-[1.5] mt-2 transition-colors ${
+          isActive ? 'text-white/90' : hovering ? 'text-white/90' : 'text-[var(--color-text-secondary)]'
         }`} style={{ transitionDuration: '0.15s' }}>
           {item.desc}
         </p>
