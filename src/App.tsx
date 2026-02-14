@@ -28,7 +28,7 @@ function HomeContent() {
           <span className="text-[var(--color-secondary)]">the rest of the way.</span>
         </h1>
         <p className="mt-4 sm:mt-5 text-[14px] sm:text-[16px] text-white/80 leading-[1.7] max-w-lg">
-          Your AI tools are live. Your team is trained. But the results you were promised still aren't showing up. It all lives in the last mile. That's where every enterprise gets stuck. And that's the only thing we do.
+          Your AI tools are live. Your team is trained. But the results you were promised still aren't showing up. It all lives in the last mile. That's where every enterprise gets stuck. And that's our specialty.
         </p>
       </div>
       <div className="hidden lg:flex flex-1 items-end lg:items-center lg:pt-6 pb-2">

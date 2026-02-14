@@ -84,24 +84,24 @@ const PROVIDER_LOGOS: { name: string; path: string }[] = [
 // Layout positions (viewBox 820 x 300)
 const QUERY_POS = { x: 10, y: 95, w: 175, h: 110 }
 const TASK_POSITIONS = [
-  { x: 255, y: 22, w: 125, h: 44 },
-  { x: 255, y: 118, w: 125, h: 44 },
-  { x: 255, y: 214, w: 125, h: 44 },
+  { x: 255, y: 18, w: 130, h: 52 },
+  { x: 255, y: 115, w: 130, h: 52 },
+  { x: 255, y: 212, w: 130, h: 52 },
 ]
 const PROVIDER_POSITIONS = [
-  { x: 460, y: 14, s: 38 },
-  { x: 460, y: 84, s: 38 },
-  { x: 460, y: 154, s: 38 },
-  { x: 460, y: 224, s: 38 },
+  { x: 455, y: 14, s: 48 },
+  { x: 455, y: 84, s: 48 },
+  { x: 455, y: 154, s: 48 },
+  { x: 455, y: 224, s: 48 },
 ]
 const OUTPUT_POSITIONS = [
-  { x: 640, y: 22, w: 125, h: 44 },
-  { x: 640, y: 118, w: 125, h: 44 },
-  { x: 640, y: 214, w: 125, h: 44 },
+  { x: 640, y: 18, w: 135, h: 52 },
+  { x: 640, y: 115, w: 135, h: 52 },
+  { x: 640, y: 212, w: 135, h: 52 },
 ]
 
 // "Last Mile" container box bounds (wraps tasks + providers)
-const LM_BOX = { x: 240, y: 2, w: 273, h: 278, r: 0 }
+const LM_BOX = { x: 238, y: -2, w: 278, h: 300, r: 0 }
 
 function getPathD(x1: number, y1: number, x2: number, y2: number): string {
   const cx1 = x1 + (x2 - x1) * 0.4
@@ -242,7 +242,7 @@ export default function FlowAnimation() {
                 className={`${nodeBase} h-full p-3 border-l-2 border-l-[var(--color-secondary)]`}
                 style={cardShadow}
               >
-                <p className="text-[11px] text-white font-medium leading-[1.5]">
+                <p className="text-[13px] text-white font-medium leading-[1.4]">
                   <TypedText text={q.query} durationMs={1200} />
                 </p>
               </motion.div>
@@ -261,7 +261,7 @@ export default function FlowAnimation() {
                     className={`${nodeBase} h-full p-2.5 border-l-2 border-l-[var(--color-accent-bright)] flex items-center`}
                     style={cardShadow}
                   >
-                    <p className="text-[9px] text-white/90 uppercase tracking-wider leading-tight font-semibold">{task}</p>
+                    <p className="text-[11px] text-white/90 uppercase tracking-wider leading-tight font-semibold">{task}</p>
                   </motion.div>
                 </foreignObject>
               )
@@ -302,7 +302,7 @@ export default function FlowAnimation() {
                         </svg>
                       )}
                     </div>
-                    <p className={`text-[8px] mt-1 text-center leading-none font-medium ${isActive ? 'text-white/80' : 'text-white/40'}`}>
+                    <p className={`text-[10px] mt-1 text-center leading-none font-medium ${isActive ? 'text-white/80' : 'text-white/40'}`}>
                       {logo.name}
                     </p>
                   </motion.div>
@@ -384,7 +384,7 @@ export default function FlowAnimation() {
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="rgba(248,113,113,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
                       <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
                     </svg>
-                    <p className="text-[9px] text-red-300/90 leading-tight font-medium">{label}</p>
+                    <p className="text-[11px] text-red-300/90 leading-tight font-medium">{label}</p>
                   </motion.div>
                 </foreignObject>
               )
@@ -461,7 +461,7 @@ export default function FlowAnimation() {
                 className="flex items-center justify-center"
               >
                 <span
-                  className="text-[11px] font-black tracking-[0.25em] uppercase px-3 py-0.5"
+                  className="text-[13px] font-black tracking-[0.25em] uppercase px-3 py-0.5"
                   style={{
                     color: 'var(--color-secondary)',
                     backgroundColor: 'var(--color-accent)',
@@ -528,7 +528,7 @@ export default function FlowAnimation() {
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--color-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 opacity-90">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <p className="text-[9px] text-white/90 leading-tight font-medium">{output}</p>
+                    <p className="text-[11px] text-white/90 leading-tight font-medium">{output}</p>
                   </motion.div>
                 </foreignObject>
               )
