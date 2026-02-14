@@ -131,7 +131,7 @@ function TypedText({ text, durationMs }: { text: string; durationMs: number }) {
   )
 }
 
-const nodeBase = 'border border-white/[0.08] bg-white/[0.05]'
+const nodeBase = 'border border-white/[0.12] bg-white/[0.07]'
 const cardShadow = { boxShadow: '3px 3px 0 0 rgba(239,239,235,0.18), 0 2px 6px rgba(0,0,0,0.15)' }
 const heavyShadow = { boxShadow: '4px 4px 0 0 rgba(239,239,235,0.22), 0 3px 8px rgba(0,0,0,0.2)' }
 
@@ -242,7 +242,7 @@ export default function FlowAnimation() {
                 className={`${nodeBase} h-full p-3 border-l-2 border-l-[var(--color-secondary)]`}
                 style={cardShadow}
               >
-                <p className="text-[11px] text-white/70 font-medium leading-[1.5]">
+                <p className="text-[11px] text-white font-medium leading-[1.5]">
                   <TypedText text={q.query} durationMs={1200} />
                 </p>
               </motion.div>
@@ -261,7 +261,7 @@ export default function FlowAnimation() {
                     className={`${nodeBase} h-full p-2.5 border-l-2 border-l-[var(--color-accent-bright)] flex items-center`}
                     style={cardShadow}
                   >
-                    <p className="text-[9px] text-white/50 uppercase tracking-wider leading-tight">{task}</p>
+                    <p className="text-[9px] text-white/90 uppercase tracking-wider leading-tight font-semibold">{task}</p>
                   </motion.div>
                 </foreignObject>
               )
@@ -297,12 +297,12 @@ export default function FlowAnimation() {
                           <path d={logo.path} />
                         </motion.svg>
                       ) : (
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="white" fillOpacity="0.1">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="white" fillOpacity="0.25">
                           <path d={logo.path} />
                         </svg>
                       )}
                     </div>
-                    <p className={`text-[8px] mt-1 text-center leading-none ${isActive ? 'text-white/30' : 'text-white/15'}`}>
+                    <p className={`text-[8px] mt-1 text-center leading-none font-medium ${isActive ? 'text-white/80' : 'text-white/40'}`}>
                       {logo.name}
                     </p>
                   </motion.div>
@@ -381,10 +381,10 @@ export default function FlowAnimation() {
                     className="border border-red-400/15 bg-red-400/[0.04] h-full p-2.5 border-l-2 border-l-red-400/40 flex items-center gap-2"
                     style={{ boxShadow: '3px 3px 0 0 rgba(239,239,235,0.1), 0 2px 6px rgba(0,0,0,0.12)' }}
                   >
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="rgba(248,113,113,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="rgba(248,113,113,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
                       <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
                     </svg>
-                    <p className="text-[9px] text-red-300/50 leading-tight">{label}</p>
+                    <p className="text-[9px] text-red-300/90 leading-tight font-medium">{label}</p>
                   </motion.div>
                 </foreignObject>
               )
@@ -525,10 +525,10 @@ export default function FlowAnimation() {
                     className={`${nodeBase} h-full p-2.5 border-l-2 border-l-[var(--color-tertiary)] flex items-center gap-2`}
                     style={heavyShadow}
                   >
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--color-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 opacity-60">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--color-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 opacity-90">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <p className="text-[9px] text-white/50 leading-tight">{output}</p>
+                    <p className="text-[9px] text-white/90 leading-tight font-medium">{output}</p>
                   </motion.div>
                 </foreignObject>
               )
