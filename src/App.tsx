@@ -16,6 +16,19 @@ const fade = {
   transition: { duration: 0.3, ease: ease4 },
 }
 
+function NavIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect width="32" height="32" fill="#1A3A6B"/>
+      <path d="M4 8 L24 15" stroke="#E8BF40" strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M4 16 L24 16" stroke="#C47D5A" strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M4 24 L24 17" stroke="#E8BF40" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="26" cy="16" r="3" fill="#C47D5A"/>
+      <circle cx="26" cy="16" r="1.5" fill="#E8BF40"/>
+    </svg>
+  )
+}
+
 function HomeContent() {
   return (
     <div className="flex flex-col lg:h-full">
@@ -163,13 +176,11 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
   const stepColors = ['var(--color-secondary)', 'var(--color-tertiary)', 'var(--color-accent-bright)']
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto">
-      <div className="flex items-center gap-3 mb-4">
-        <button onClick={onBack} className="text-white/60 hover:text-white transition-colors cursor-pointer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </button>
-        <p className="text-[13px] font-semibold text-[var(--color-secondary)] tracking-[0.12em] uppercase">{c.tagline}</p>
-      </div>
+    <div className="flex flex-col lg:h-full overflow-y-auto">
+      <button onClick={onBack} className="flex items-center gap-3 mb-4 text-white/60 hover:text-white transition-colors cursor-pointer group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <p className="text-[13px] font-semibold text-[var(--color-secondary)] group-hover:text-[var(--color-secondary-hover)] tracking-[0.12em] uppercase transition-colors">{c.tagline}</p>
+      </button>
 
       <h2 className="text-[2rem] sm:text-[2.6rem] md:text-[3rem] font-black leading-[1.0] tracking-[-0.04em] text-white mb-3">
         {c.title}
@@ -242,7 +253,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
 
   if (sent) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-center px-6">
+      <div className="flex flex-col items-center justify-center lg:h-full text-center px-6 py-12 lg:py-0">
         <div className="w-14 h-14 border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 flex items-center justify-center mb-5 card-inner">
           <svg className="w-7 h-7 text-[var(--color-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
@@ -253,13 +264,11 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 mb-4">
-        <button onClick={onBack} className="text-white/60 hover:text-white transition-colors cursor-pointer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </button>
-        <p className="text-[13px] font-semibold text-[var(--color-secondary)] tracking-[0.12em] uppercase">Get Started</p>
-      </div>
+    <div className="flex flex-col lg:h-full">
+      <button onClick={onBack} className="flex items-center gap-3 mb-4 text-white/60 hover:text-white transition-colors cursor-pointer group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <p className="text-[13px] font-semibold text-[var(--color-secondary)] group-hover:text-[var(--color-secondary-hover)] tracking-[0.12em] uppercase transition-colors">Get Started</p>
+      </button>
 
       <h2 className="text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] font-black leading-[1.05] tracking-[-0.03em] text-white mb-2">
         Let's talk.
@@ -501,29 +510,27 @@ export default function App() {
   ]
 
   return (
-    <div className="grid-texture min-h-screen lg:h-screen w-screen lg:overflow-hidden">
+    <div className="grid-texture min-h-[100dvh] w-screen overflow-x-hidden">
       <CircuitGrid />
 
-      {/* Mobile header bar */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 py-3 bg-[var(--color-accent)]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-[var(--color-secondary)] flex items-center justify-center">
-            <span className="text-[11px] font-black text-white tracking-tight">LM</span>
-          </div>
+      {/* Sticky header bar */}
+      <div className="lg:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 py-2.5 bg-[var(--color-accent)]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="flex items-center gap-2.5">
+          <NavIcon className="w-8 h-8" />
           <span className="text-[14px] font-bold text-white">Last Mile</span>
         </div>
-        <button onClick={() => setMenuOpen(true)} className="w-9 h-9 flex items-center justify-center text-white/80 hover:text-white transition-colors cursor-pointer">
+        <button onClick={() => setMenuOpen(true)} className="w-10 h-10 flex items-center justify-center text-white/80 hover:text-white transition-colors cursor-pointer">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
 
       <MobileNav navItems={navItems} view={view} setView={setView} isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <div className="relative z-10 min-h-screen lg:h-full flex items-start lg:items-center justify-center px-3 sm:px-6 lg:px-8 pt-16 pb-10 lg:pt-3 lg:pb-5">
-        <div className="w-full max-w-[1440px] lg:h-full lg:max-h-[800px] flex flex-col lg:flex-row gap-2.5 sm:gap-3">
+      <div className="relative z-10 flex items-start lg:items-center justify-center px-3 sm:px-6 lg:px-8 pt-16 pb-6 lg:pt-3 lg:pb-5 lg:min-h-screen">
+        <div className="w-full max-w-[1440px] lg:h-[min(calc(100vh-2rem),800px)] flex flex-col lg:flex-row gap-2.5 sm:gap-3">
 
           {/* Left panel: navy main content */}
-          <div className="flex-1 bg-[var(--color-accent)] card-pop p-5 sm:p-8 lg:p-10 relative overflow-hidden lg:overflow-y-auto min-h-0">
+          <div className="flex-1 bg-[var(--color-accent)] card-pop p-5 sm:p-8 lg:p-10 relative overflow-y-auto min-h-0">
             <AnimatePresence mode="wait">
               <motion.div key={view} {...fade} className="lg:h-full">
                 {view === 'home' && <HomeContent />}
@@ -535,7 +542,14 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          {/* Right panel: nav column -- hidden on mobile, shown on md+ */}
+          {/* Mobile-only animation panel (below text on home view) */}
+          {view === 'home' && (
+            <div className="lg:hidden bg-[var(--color-accent)] card-pop p-4 sm:p-6">
+              <FlowAnimation />
+            </div>
+          )}
+
+          {/* Right panel: nav column -- hidden on mobile, shown on lg+ */}
           <div className="hidden lg:flex w-[300px] xl:w-[340px] flex-col gap-2 sm:gap-2.5 flex-shrink-0 min-h-0 lg:min-h-full">
             {navItems.map((item) => (
               <NavButton
@@ -552,7 +566,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <div className="lg:fixed lg:bottom-0 inset-x-0 z-10 flex items-center justify-center h-8">
+      <div className="lg:fixed lg:bottom-0 inset-x-0 z-10 flex items-center justify-center h-8 pb-[env(safe-area-inset-bottom)]">
         <p className="text-[10px] text-[var(--color-text-muted)]">
           &copy; {new Date().getFullYear()} Last Mile &middot; contact@onlastmile.com
         </p>

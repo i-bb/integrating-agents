@@ -187,7 +187,7 @@ export default function FlowAnimation() {
   const q = QUERIES[queryIdx]
 
   return (
-    <div className="hidden lg:block w-full select-none">
+    <div className="w-full select-none">
       <AnimatePresence mode="wait">
         <motion.div
           key={queryIdx}
