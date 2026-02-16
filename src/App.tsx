@@ -19,12 +19,12 @@ const fade = {
 function NavIcon({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <rect width="32" height="32" fill="#1A3A6B"/>
-      <path d="M4 8 L24 15" stroke="#E8BF40" strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M4 16 L24 16" stroke="#C47D5A" strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M4 24 L24 17" stroke="#E8BF40" strokeWidth="2.5" strokeLinecap="round"/>
-      <circle cx="26" cy="16" r="3" fill="#C47D5A"/>
-      <circle cx="26" cy="16" r="1.5" fill="#E8BF40"/>
+      <rect width="32" height="32" rx="4" fill="#1A3A6B"/>
+      <path d="M6 10 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M6 16 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M6 22 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M16 16 L26 16" stroke="#C47D5A" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="26" cy="16" r="2.5" fill="#E8BF40"/>
     </svg>
   )
 }
@@ -542,9 +542,9 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          {/* Mobile-only animation panel (below text on home view) */}
+          {/* Mobile-only animation panel (below text on home view, matches text panel size) */}
           {view === 'home' && (
-            <div className="lg:hidden bg-[var(--color-accent)] card-pop p-4 sm:p-6">
+            <div className="lg:hidden bg-[var(--color-accent)] card-pop p-5 sm:p-8 min-h-[50dvh] flex items-center">
               <FlowAnimation />
             </div>
           )}
@@ -567,7 +567,7 @@ export default function App() {
 
       {/* Footer */}
       <div className="lg:fixed lg:bottom-0 inset-x-0 z-10 flex items-center justify-center h-8 pb-[env(safe-area-inset-bottom)]">
-        <p className="text-[10px] text-[var(--color-text-muted)]">
+        <p className="text-[13px] sm:text-[14px] text-[var(--color-text-muted)]">
           &copy; {new Date().getFullYear()} Last Mile &middot; contact@onlastmile.com
         </p>
       </div>

@@ -290,19 +290,19 @@ export default function FlowAnimation() {
                           width="20"
                           height="20"
                           fill="white"
-                          initial={{ fillOpacity: 0.35 }}
-                          animate={{ fillOpacity: [0.35, 0.7, 0.5] }}
+                          initial={{ fillOpacity: 0.7 }}
+                          animate={{ fillOpacity: [0.7, 1, 0.9] }}
                           transition={{ duration: 2.5, delay: 5.0, ease: 'easeInOut' }}
                         >
                           <path d={logo.path} />
                         </motion.svg>
                       ) : (
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="white" fillOpacity="0.25">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="white" fillOpacity="0.45">
                           <path d={logo.path} />
                         </svg>
                       )}
                     </div>
-                    <p className={`text-[10px] mt-1 text-center leading-none font-medium ${isActive ? 'text-white/80' : 'text-white/40'}`}>
+                    <p className={`text-[10px] mt-1 text-center leading-none font-medium ${isActive ? 'text-white' : 'text-white/50'}`}>
                       {logo.name}
                     </p>
                   </motion.div>
