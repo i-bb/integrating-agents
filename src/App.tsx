@@ -542,9 +542,9 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          {/* Mobile-only animation panel (below text on home view, matches text panel size) */}
+          {/* Mobile-only animation panel (below text on home view) */}
           {view === 'home' && (
-            <div className="lg:hidden bg-[var(--color-accent)] card-pop p-5 sm:p-8 min-h-[50dvh] flex items-center">
+            <div className="lg:hidden bg-[var(--color-accent)] card-pop p-5 sm:p-8">
               <FlowAnimation />
             </div>
           )}
