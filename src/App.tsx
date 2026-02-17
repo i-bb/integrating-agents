@@ -20,11 +20,13 @@ function NavIcon({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
       <rect width="32" height="32" rx="4" fill="#1A3A6B"/>
-      <path d="M6 10 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M6 16 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M6 22 L16 16" stroke="#E8BF40" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M16 16 L26 16" stroke="#C47D5A" strokeWidth="2.5" strokeLinecap="round"/>
-      <circle cx="26" cy="16" r="2.5" fill="#E8BF40"/>
+      <rect x="3" y="24" width="7" height="5" fill="#C47D5A"/>
+      <rect x="10" y="19" width="7" height="10" fill="#D4A853"/>
+      <rect x="17" y="14" width="7" height="15" fill="#D4A853"/>
+      <rect x="24" y="9" width="5" height="20" fill="#C47D5A"/>
+      <line x1="10" y1="19" x2="10" y2="24" stroke="#1A3A6B" strokeWidth="0.5"/>
+      <line x1="17" y1="14" x2="17" y2="19" stroke="#1A3A6B" strokeWidth="0.5"/>
+      <line x1="24" y1="9" x2="24" y2="14" stroke="#1A3A6B" strokeWidth="0.5"/>
     </svg>
   )
 }

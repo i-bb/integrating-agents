@@ -60,20 +60,45 @@ function VConnector({ visible, failed }: { visible: boolean; failed?: boolean })
 function useCyclePhase() {
   const [state, setState] = useState({ queryIdx: 0, elapsed: 0 })
   const startRef = useRef(0)
+  const rafRef = useRef(0)
 
   useEffect(() => {
     startRef.current = performance.now()
-    const id = setInterval(() => {
-      const ms = performance.now() - startRef.current
-      setState(prev => {
-        if (ms >= CYCLE_DURATION) {
-          startRef.current = performance.now()
-          return { queryIdx: (prev.queryIdx + 1) % QUERIES.length, elapsed: 0 }
-        }
-        return { ...prev, elapsed: ms }
-      })
-    }, 200)
-    return () => clearInterval(id)
+    let alive = true
+
+    const tick = () => {
+      if (!alive) return
+      const now = performance.now()
+      let ms = now - startRef.current
+      if (ms >= CYCLE_DURATION) {
+        const skippedCycles = Math.floor(ms / CYCLE_DURATION)
+        startRef.current += skippedCycles * CYCLE_DURATION
+        ms = now - startRef.current
+        setState(prev => ({
+          queryIdx: (prev.queryIdx + skippedCycles) % QUERIES.length,
+          elapsed: ms,
+        }))
+      } else {
+        setState(prev => ({ ...prev, elapsed: ms }))
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+
+    rafRef.current = requestAnimationFrame(tick)
+
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') {
+        startRef.current = performance.now()
+        setState(prev => ({ ...prev, elapsed: 0 }))
+      }
+    }
+    document.addEventListener('visibilitychange', onVisible)
+
+    return () => {
+      alive = false
+      cancelAnimationFrame(rafRef.current)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
   }, [])
 
   let phase: Phase = 'query'
