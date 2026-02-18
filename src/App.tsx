@@ -42,11 +42,11 @@ function HomeContent() {
           AI gets you close.<br />We get you<br />
           <span className="text-[var(--color-secondary)]">the rest of the way.</span>
         </h1>
-        <p className="mt-4 sm:mt-5 lg:mb-4 text-[15px] sm:text-[17px] text-white/90 leading-[1.7] max-w-lg">
+        <p className="mt-4 sm:mt-5 lg:mb-2 text-[15px] sm:text-[17px] text-white/90 leading-[1.7] max-w-lg">
           Your AI tools are live. Your team is trained. But the results you were promised still aren't showing up. It all lives in the last mile. That's where every enterprise gets stuck. And that's our specialty.
         </p>
       </div>
-      <div className="hidden lg:flex flex-1 items-end lg:items-center lg:pt-10 pb-2">
+      <div className="hidden lg:flex flex-1 items-end lg:items-center lg:pt-7 pb-2">
         <FlowAnimation />
       </div>
     </div>
