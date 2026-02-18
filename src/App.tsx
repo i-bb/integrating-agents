@@ -250,16 +250,15 @@ function ContactContent({ onBack }: { onBack: () => void }) {
   const onSubmit = async (data: FormData) => {
     setError('')
     try {
-      const res = await fetch('https://formspree.io/f/xvzbqpej', {
+      const res = await fetch('https://yiymekxdiebwdvwkhmcb.supabase.co/functions/v1/contact-form', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: data.name,
           email: data.email,
           company: data.company,
           role: data.role || 'Not provided',
           message: data.needs,
-          _subject: `New inquiry from ${data.name} at ${data.company}`,
         }),
       })
       if (!res.ok) throw new Error('Failed to send')
