@@ -246,10 +246,27 @@ function ServiceContent({ view, onBack }: { view: 'strategy' | 'transformation' 
 function ContactContent({ onBack }: { onBack: () => void }) {
   const [sent, setSent] = useState(false)
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>()
+  const [error, setError] = useState('')
   const onSubmit = async (data: FormData) => {
-    console.log('Form submission:', data)
-    await new Promise(r => setTimeout(r, 600))
-    setSent(true)
+    setError('')
+    try {
+      const res = await fetch('https://formspree.io/f/xvzbqpej', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          role: data.role || 'Not provided',
+          message: data.needs,
+          _subject: `New inquiry from ${data.name} at ${data.company}`,
+        }),
+      })
+      if (!res.ok) throw new Error('Failed to send')
+      setSent(true)
+    } catch {
+      setError('Something went wrong. Please try again or email us directly at contact@onlastmile.com')
+    }
   }
   const input = 'w-full border border-white/20 bg-white/[0.08] px-4 py-3 text-[15px] text-white placeholder:text-white/50 focus:outline-none focus:border-[var(--color-secondary)]/60 focus:bg-white/[0.1] transition-all card-inner'
 
@@ -311,6 +328,7 @@ function ContactContent({ onBack }: { onBack: () => void }) {
         <button type="submit" disabled={isSubmitting} className="w-full py-3.5 text-[15px] font-bold bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] transition-all disabled:opacity-60 cursor-pointer tracking-wide card-inner hover:translate-y-[-1px]">
           {isSubmitting ? 'Sending...' : 'Send'}
         </button>
+        {error && <p className="text-[13px] text-red-400 text-center">{error}</p>}
         <p className="text-[13px] text-white/60 text-center">No spam. No obligation. Just a conversation.</p>
       </form>
     </div>
