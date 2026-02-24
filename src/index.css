@@ -29,6 +29,7 @@
     scroll-behavior: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color-scheme: only light;
   }
 
   body {
@@ -87,6 +88,19 @@ button.card-pop:hover {
   border-right: 3px solid rgba(0, 0, 0, 0.14);
   border-bottom: 3px solid rgba(0, 0, 0, 0.14);
   transform: translate(-2px, -2px);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #FFFFFF;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .card-inner {
