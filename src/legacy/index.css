@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #EFEFEB;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F4F4F0;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-highlight: rgba(0, 0, 0, 0.16);
+  --color-accent: #2E5A94;
+  --color-accent-hover: #3B6BA6;
+  --color-accent-muted: rgba(46, 90, 148, 0.08);
+  --color-accent-bright: #5B8CC5;
+  --color-btn-active: #1A3A6B;
+  --color-secondary: #E8BF40;
+  --color-secondary-hover: #F2D465;
+  --color-secondary-muted: rgba(184, 146, 46, 0.08);
+  --color-tertiary: #A86840;
+  --color-tertiary-hover: #C47D5A;
+  --color-tertiary-muted: rgba(168, 104, 64, 0.08);
+  --color-text: #1A1A1A;
+  --color-text-secondary: #5A5A5A;
+  --color-text-muted: #999999;
+
+  --font-sans: 'Satoshi', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: only light;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: -0.01em;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  ::selection {
+    background-color: var(--color-secondary);
+    color: #FFFFFF;
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+}
+
+.grid-texture::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.card-pop {
+  box-shadow:
+    6px 6px 0 0 rgba(0, 0, 0, 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  border-right: 2px solid rgba(0, 0, 0, 0.10);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+}
+
+.card-pop-active {
+  box-shadow:
+    5px 5px 0 0 rgba(0, 0, 0, 0.28),
+    0 3px 10px rgba(0, 0, 0, 0.10);
+  border-right: 2px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+button.card-pop:hover {
+  box-shadow:
+    10px 10px 0 0 rgba(0, 0, 0, 0.30),
+    0 8px 24px rgba(0, 0, 0, 0.16);
+  border-right: 3px solid rgba(0, 0, 0, 0.14);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.14);
+  transform: translate(-2px, -2px);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #FFFFFF;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.card-inner {
+  box-shadow:
+    3px 3px 0 0 rgba(239, 239, 235, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+}
