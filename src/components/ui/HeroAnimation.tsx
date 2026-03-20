@@ -1,139 +1,97 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+import { motion, useAnimation, useReducedMotion } from 'framer-motion'
 
-interface Node {
-  x: number
-  y: number
-  vx: number
-  vy: number
-  r: number
-  gold: boolean
-  phase: number
-}
+// Bar geometry mirrors the favicon exactly, scaled up ~13×
+// All bars bottom-align at y=380 in a 420×400 viewBox
+const bars = [
+  { x: 30,  y: 320, w: 84, h: 60,  opacity: 1.00, entranceDelay: 0.15, breathPeriod: 5.4, breathOffset: 0.0 },
+  { x: 130, y: 260, w: 84, h: 120, opacity: 0.85, entranceDelay: 0.30, breathPeriod: 4.8, breathOffset: 0.8 },
+  { x: 230, y: 200, w: 84, h: 180, opacity: 0.70, entranceDelay: 0.45, breathPeriod: 5.1, breathOffset: 1.7 },
+  { x: 330, y: 120, w: 60, h: 260, opacity: 0.55, entranceDelay: 0.60, breathPeriod: 4.6, breathOffset: 2.5 },
+]
 
-function makeNodes(w: number, h: number): Node[] {
-  const area = w * h
-  const count = Math.max(24, Math.min(72, Math.round(area / 14000)))
-  return Array.from({ length: count }, () => ({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.38,
-    vy: (Math.random() - 0.5) * 0.38,
-    r: Math.random() * 1.8 + 1.2,
-    gold: Math.random() < 0.1,
-    phase: Math.random() * Math.PI * 2,
-  }))
-}
+const ease = [0.22, 1, 0.36, 1] as const
 
-export function HeroAnimation() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const rafRef = useRef<number>(0)
+function Bar(props: typeof bars[number] & { reduced: boolean }) {
+  const { x, y, w, h, opacity, entranceDelay, breathPeriod, breathOffset, reduced } = props
+  const controls = useAnimation()
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-    if (!ctx) return
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const MAX_DIST = 140
-    // Brand hex (resolved from CSS vars in browser earlier)
-    const NAVY_RGB = '0,59,117'
-    const GOLD_RGB = '237,179,69'
-
-    let w = 0
-    let h = 0
-    let nodes: Node[] = []
-    let dpr = devicePixelRatio || 1
-
-    function resize() {
-      const rect = canvas!.getBoundingClientRect()
-      if (rect.width === w && rect.height === h) return
-      dpr = devicePixelRatio || 1
-      w = rect.width
-      h = rect.height
-      canvas!.width = Math.round(w * dpr)
-      canvas!.height = Math.round(h * dpr)
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
-      nodes = makeNodes(w, h)
+    if (reduced) {
+      controls.set({ scaleY: 1 })
+      return
     }
-
-    function tick(t: number) {
-      ctx.clearRect(0, 0, w, h)
-
-      if (!reduced) {
-        for (const n of nodes) {
-          n.x += n.vx
-          n.y += n.vy
-          if (n.x < 0) { n.x = 0; n.vx = Math.abs(n.vx) }
-          if (n.x > w) { n.x = w; n.vx = -Math.abs(n.vx) }
-          if (n.y < 0) { n.y = 0; n.vy = Math.abs(n.vy) }
-          if (n.y > h) { n.y = h; n.vy = -Math.abs(n.vy) }
-        }
-      }
-
-      // Connections
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i]
-          const b = nodes[j]
-          const dx = a.x - b.x
-          const dy = a.y - b.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < MAX_DIST) {
-            const frac = 1 - dist / MAX_DIST
-            const isGold = a.gold || b.gold
-            ctx.beginPath()
-            ctx.moveTo(a.x, a.y)
-            ctx.lineTo(b.x, b.y)
-            ctx.strokeStyle = isGold
-              ? `rgba(${GOLD_RGB},${(frac * 0.18).toFixed(3)})`
-              : `rgba(${NAVY_RGB},${(frac * 0.11).toFixed(3)})`
-            ctx.lineWidth = isGold ? 1 : 0.75
-            ctx.stroke()
-          }
-        }
-      }
-
-      // Nodes
-      for (const n of nodes) {
-        const pulse = n.gold
-          ? 0.65 + 0.35 * Math.sin(t * 0.0012 + n.phase)
-          : 1
-        ctx.beginPath()
-        ctx.arc(n.x, n.y, n.r * pulse, 0, Math.PI * 2)
-        ctx.fillStyle = n.gold
-          ? `rgba(${GOLD_RGB},${(0.55 * pulse).toFixed(3)})`
-          : `rgba(${NAVY_RGB},0.22)`
-        ctx.fill()
-      }
-
-      rafRef.current = requestAnimationFrame(tick)
+    const run = async () => {
+      await controls.start({
+        scaleY: 1,
+        transition: { duration: 0.85, delay: entranceDelay, ease },
+      })
+      controls.start({
+        scaleY: [1, 1.07, 0.95, 1],
+        transition: {
+          duration: breathPeriod,
+          delay: breathOffset * 0.4,
+          repeat: Infinity,
+          repeatType: 'loop',
+          ease: 'easeInOut',
+        },
+      })
     }
-
-    resize()
-
-    const ro = new ResizeObserver(resize)
-    ro.observe(canvas)
-
-    rafRef.current = requestAnimationFrame(tick)
-
-    return () => {
-      cancelAnimationFrame(rafRef.current)
-      ro.disconnect()
-    }
+    run()
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
+    <motion.rect
+      x={x}
+      y={y}
+      width={w}
+      height={h}
+      fill="#EDB345"
+      fillOpacity={opacity}
+      initial={{ scaleY: 0 }}
+      animate={controls}
+      style={{
+        transformBox: 'fill-box',
+        transformOrigin: 'bottom',
+      }}
+    />
+  )
+}
+
+export function HeroAnimation() {
+  const reduced = useReducedMotion() ?? false
+
+  return (
+    <div
       aria-hidden="true"
       style={{
         position: 'absolute',
         inset: 0,
-        width: '100%',
-        height: '100%',
-        display: 'block',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
-    />
+    >
+      <svg
+        viewBox="0 0 420 400"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ width: '72%', maxWidth: '360px' }}
+        overflow="visible"
+      >
+        {/* Subtle baseline */}
+        <line
+          x1="20"
+          y1="382"
+          x2="400"
+          y2="382"
+          stroke="#003B75"
+          strokeOpacity="0.08"
+          strokeWidth="1"
+        />
+        {bars.map((bar, i) => (
+          <Bar key={i} {...bar} reduced={reduced} />
+        ))}
+      </svg>
+    </div>
   )
 }
