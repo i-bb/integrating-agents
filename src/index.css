@@ -178,6 +178,18 @@
   line-height: 1.0;
   letter-spacing: -0.04em;
 }
+/* Hero-specific headline: sized to fit cleanly inside the 55vw left column */
+.hero-hl {
+  font-size: clamp(2.4rem, 7vw, 6.2rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 1024px) {
+  .hero-hl {
+    font-size: clamp(2.4rem, 3.9vw, 5rem);
+  }
+}
 
 .display-lg {
   font-size: clamp(2rem, 4.5vw, 3.8rem);
