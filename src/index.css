@@ -376,11 +376,36 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HERO SECTION
+   HERO SECTION — Responsive Sizing Policy
    ═══════════════════════════════════════════════════════════════
 
-   Fills exactly 100svh. Content is a single bounded column,
-   vertically centred. No two-column split, no dead right space.
+   LAYOUT ZONES
+     < 1280px   Single column, content centred (mobile/tablet)
+     ≥ 1280px   Two-zone split: content left (~55%), placeholder
+                right (~45%). Content shifts left as viewport
+                grows, right zone reserved for future animation.
+
+   SCALING STRATEGY
+     Typography, spacing, and elements scale fluidly with the
+     viewport using clamp(). Unlike the old approach that capped
+     at a fixed max-width, the content column now grows with the
+     viewport so it always fills its zone proportionally.
+
+     Three tiers govern scale:
+       Mobile (< 768px)  — compact, tight spacing
+       Mid    (768–1279px) — comfortable, breathing room
+       Large  (≥ 1280px) — expansive, left-aligned, scaled up
+
+     The headline, body, buttons, and stats all use fluid values
+     that produce proportional sizing at any viewport width.
+     No element ever looks "too small for the screen."
+
+   WHITESPACE CONTROL
+     Vertical centering via flexbox keeps content in the optical
+     centre. Padding scales with viewport height (vh) so the
+     content group stays cohesive. The right zone absorbs excess
+     horizontal space that previously showed as dead whitespace.
+
    ═══════════════════════════════════════════════════════════════ */
 
 .hero-section {
@@ -388,41 +413,62 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 64px; /* nav height offset */
+  padding-top: 64px;
 }
 
-/* Bounded content column — max-width matches container but
-   padding is tighter so the large headline has room to breathe */
+/* Two-zone layout wrapper */
+.hero-layout {
+  width: 100%;
+  max-width: 2200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  min-height: 0;
+}
+
+/* Content zone — grows fluidly, never gets lost in whitespace */
 .hero-content-wrap {
   width: 100%;
-  max-width: 860px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(1rem, 6vw, 5rem);
-  padding-right: clamp(1rem, 6vw, 5rem);
+  padding-left: clamp(1.25rem, 6vw, 5rem);
+  padding-right: clamp(1.25rem, 6vw, 5rem);
   padding-top: clamp(2rem, 4vh, 4rem);
   padding-bottom: clamp(2rem, 4vh, 4rem);
   position: relative;
   z-index: 1;
 }
 
-/* Label */
+/* Right zone — hidden below 1280px, visible above */
+.hero-right-zone {
+  display: none;
+}
+
+/* ─── Label ──────────────────────────────────────────────────── */
+
 .hero-label {
-  font-size: clamp(0.625rem, 0.9vw, 0.7rem);
+  font-size: clamp(0.625rem, 0.55rem + 0.25vw, 0.8rem);
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-navy);
-  margin: 0 0 clamp(1rem, 2.5vh, 1.75rem) 0;
+  margin: 0 0 clamp(1rem, 2.5vh, 2rem) 0;
 }
 
-/* Headline accent line */
+/* ─── Headline ───────────────────────────────────────────────── */
+
+.hero-hl {
+  font-size: clamp(2.2rem, 1.4rem + 3.5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin: 0;
+  margin-bottom: clamp(1rem, 2.5vh, 2rem);
+}
+
 .hero-hl-accent {
   color: var(--color-navy);
   margin-top: 0.1em;
 }
 
-/* Animated gold underline on "yours too." */
 .hero-underline-wrap {
   position: relative;
   display: inline-block;
@@ -440,36 +486,32 @@
   display: block;
 }
 
-/* Gap below headline */
-.hero-hl {
-  margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
-}
+/* ─── Body ───────────────────────────────────────────────────── */
 
-/* Body paragraph */
 .hero-body {
-  font-size: clamp(0.9rem, 1.5vw, 1.075rem);
+  font-size: clamp(0.9rem, 0.75rem + 0.55vw, 1.25rem);
   line-height: 1.72;
   color: var(--color-text-secondary);
-  max-width: 58ch;
+  max-width: 54ch;
   margin: 0 0 clamp(1.5rem, 3.5vh, 2.5rem) 0;
 }
 
-/* CTA row */
+/* ─── CTAs ───────────────────────────────────────────────────── */
+
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
-  margin-bottom: clamp(1.75rem, 4vh, 3rem);
+  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  margin-bottom: clamp(1.75rem, 4vh, 3.5rem);
 }
 
-/* Primary button */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: clamp(0.7rem, 1.2vh, 1rem) clamp(1.25rem, 2vw, 1.75rem);
-  font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+  padding: clamp(0.7rem, 0.6rem + 0.4vw, 1.1rem) clamp(1.25rem, 1rem + 0.8vw, 2rem);
+  font-size: clamp(0.8rem, 0.72rem + 0.3vw, 1rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   background: var(--color-navy);
@@ -480,12 +522,11 @@
   font-family: var(--font-sans);
 }
 
-/* Ghost / secondary link */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  font-size: clamp(0.75rem, 0.68rem + 0.25vw, 0.95rem);
   font-weight: 600;
   color: var(--color-text-secondary);
   text-decoration: none;
@@ -496,22 +537,23 @@
   color: var(--color-text);
 }
 
-/* Stats row */
+/* ─── Stats ──────────────────────────────────────────────────── */
+
 .hero-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(1rem, 2.5vw, 2rem);
+  gap: clamp(1rem, 0.6rem + 1.2vw, 2.5rem);
 }
 
 .hero-stat {
   display: flex;
   flex-direction: column;
-  padding-left: clamp(0.75rem, 1.2vw, 1rem);
+  padding-left: clamp(0.75rem, 0.5rem + 0.5vw, 1.25rem);
   border-left: 2px solid var(--color-border-strong);
 }
 
 .hero-stat-value {
-  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  font-size: clamp(0.8rem, 0.7rem + 0.35vw, 1.05rem);
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -520,16 +562,17 @@
 }
 
 .hero-stat-label {
-  font-size: clamp(0.6rem, 0.75vw, 0.675rem);
+  font-size: clamp(0.6rem, 0.52rem + 0.2vw, 0.75rem);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
-  max-width: 14ch;
+  max-width: 16ch;
   line-height: 1.4;
 }
 
-/* Bottom rule */
+/* ─── Bottom rule ────────────────────────────────────────────── */
+
 .hero-rule {
   position: absolute;
   bottom: 0;
@@ -539,13 +582,113 @@
   background: var(--color-border-strong);
 }
 
-/* Short landscape phones: natural height */
+/* ─── Large viewports: two-zone split ────────────────────────── */
+
+@media (min-width: 1280px) {
+  .hero-layout {
+    display: flex;
+  }
+
+  .hero-content-wrap {
+    flex: 0 0 58%;
+    max-width: 58%;
+    padding-left: clamp(3rem, 5vw, 7rem);
+    padding-right: clamp(2rem, 3vw, 4rem);
+  }
+
+  .hero-right-zone {
+    display: block;
+    flex: 1 1 42%;
+    min-height: 300px;
+    position: relative;
+  }
+}
+
+/* Extra-large: scale up further, give content more room */
+@media (min-width: 1600px) {
+  .hero-content-wrap {
+    flex: 0 0 55%;
+    max-width: 55%;
+    padding-left: clamp(4rem, 6vw, 9rem);
+  }
+
+  .hero-right-zone {
+    flex: 1 1 45%;
+  }
+}
+
+/* Ultra-wide: prevent infinite stretching */
+@media (min-width: 2200px) {
+  .hero-content-wrap {
+    padding-left: 9rem;
+  }
+}
+
+/* ─── Short landscape phones: natural height ─────────────────── */
+
 @media (max-height: 430px) {
   .hero-section {
     min-height: unset;
     padding-top: 64px;
     padding-bottom: 2rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INTEGRATION GRID (Hero right zone)
+   ═══════════════════════════════════════════════════════════════ */
+
+.integration-grid-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 24px;
+  /* Align grid top with the headline (skip label + its margin) */
+  padding-top: calc(clamp(2rem, 4vh, 4rem) + 2.5rem);
+}
+
+.integration-grid {
+  position: relative;
+}
+
+.integration-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.integration-cell-inner {
+  width: 80px;
+  height: 80px;
+  aspect-ratio: 1;
+  background: var(--color-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    4px 4px 0 0 oklch(0% 0 0 / 0.15),
+    0 2px 8px oklch(0% 0 0 / 0.06);
+  border: 1.5px solid transparent;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Gold highlight when cell is activated */
+.integration-cell-bright {
+  border-color: var(--color-gold);
+  box-shadow:
+    4px 4px 0 0 oklch(0% 0 0 / 0.15),
+    0 2px 8px oklch(0% 0 0 / 0.06),
+    0 0 16px 4px var(--color-gold-muted),
+    0 0 32px 8px oklch(80% 0.14 80 / 0.08);
+}
+
+.integration-icon {
+  width: 52%;
+  height: 52%;
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────── */
