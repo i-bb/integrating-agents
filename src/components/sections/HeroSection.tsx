@@ -24,21 +24,23 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
 
   return (
     <section
-      className="relative grid-texture overflow-hidden"
+      className="relative grid-texture overflow-hidden hero-section"
       style={{ paddingTop: '64px' }}
       aria-labelledby="hero-heading"
     >
-      {/* Two-column layout: content left, animation right */}
-      <div className="lg:grid lg:grid-cols-[55fr_45fr]">
+      {/* Two-column layout: fills remaining viewport height.
+          Mobile: flex-col so left column can fill height via flex-1.
+          Desktop: grid overrides flex for the 55/45 split. */}
+      <div className="lg:grid lg:grid-cols-[55fr_45fr] hero-grid">
 
-        {/* ── Left column: content ── */}
+        {/* ── Left column: content — vertically centred as one group ── */}
         <div
-          className="relative z-10"
+          className="relative z-10 flex-1 flex flex-col justify-center"
           style={{
             paddingLeft: 'clamp(1.25rem, 6vw, 7rem)',
             paddingRight: 'clamp(1rem, 3vw, 3rem)',
-            paddingTop: 'clamp(2.5rem, 8vh, 6rem)',
-            paddingBottom: 'clamp(2.5rem, 8vh, 5rem)',
+            paddingTop: 'clamp(1.5rem, 5vh, 4rem)',
+            paddingBottom: 'clamp(1.5rem, 5vh, 4rem)',
           }}
         >
           {/* LM watermark (mobile only — desktop has animation) */}
@@ -204,7 +206,7 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
 
         {/* ── Right column: animation (desktop only) ── */}
         <div
-          className="hidden lg:block relative"
+          className="hidden lg:flex lg:items-center lg:justify-center relative"
           aria-hidden="true"
           style={{
             borderLeft: '1px solid var(--color-border-strong)',

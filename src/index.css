@@ -178,6 +178,41 @@
   line-height: 1.0;
   letter-spacing: -0.04em;
 }
+/* ─── Hero viewport lock ────────────────────────────────────── */
+/*
+ * The hero section fills exactly 100svh so the trust strip is
+ * strictly below the fold. Content is vertically centred as a
+ * single group — no split groups, no justify-between dead zones.
+ */
+.hero-section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+.hero-grid {
+  flex: 1;          /* fills hero-section height as a flex child */
+  display: flex;
+  flex-direction: column;
+  /* At lg+, Tailwind's lg:grid overrides display:flex → two-column grid */
+}
+@media (min-width: 1024px) {
+  /* grid-template-rows:1fr makes the single row fill the full flex-1 height,
+     so both grid cells stretch to the section height and justify-center works */
+  .hero-grid {
+    grid-template-rows: 1fr;
+  }
+}
+
+/* Short landscape phones: unlock natural height to prevent overflow */
+@media (max-height: 430px) {
+  .hero-section {
+    min-height: unset;
+  }
+  .hero-grid {
+    flex: unset;
+  }
+}
+
 /* Hero-specific headline: sized to fit cleanly inside the 55vw left column */
 .hero-hl {
   font-size: clamp(2.4rem, 7vw, 6.2rem);
@@ -187,7 +222,9 @@
 }
 @media (min-width: 1024px) {
   .hero-hl {
-    font-size: clamp(2.4rem, 3.9vw, 5rem);
+    /* min() adds a vh cap that only bites on short landscape screens (≤640px tall)
+       preventing the headline from overflowing a compressed viewport height */
+    font-size: min(clamp(2.4rem, 3.9vw, 5rem), 9vh);
   }
 }
 
