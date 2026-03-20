@@ -171,8 +171,10 @@ export function IntegrationGrid() {
 
   const doSwap = useCallback((cellIdx: number): Promise<void> => {
     return new Promise(resolve => {
+      // 1. Fade out the current icon
       setFadingCells(prev => new Set([...prev, cellIdx]))
 
+      // 2. After fade-out completes, swap the underlying data (icon stays hidden)
       setTimeout(() => {
         if (!mountedRef.current) { resolve(); return }
 
@@ -210,13 +212,18 @@ export function IntegrationGrid() {
           return next
         })
 
-        setFadingCells(prev => {
-          const n = new Set(prev)
-          n.delete(cellIdx)
-          return n
-        })
+        // 3. Wait a frame for React to render the new icon (still hidden),
+        //    then remove fading so it fades in
+        requestAnimationFrame(() => {
+          setFadingCells(prev => {
+            const n = new Set(prev)
+            n.delete(cellIdx)
+            return n
+          })
 
-        setTimeout(() => resolve(), 500)
+          // 4. Wait for fade-in transition to complete
+          setTimeout(() => resolve(), 500)
+        })
       }, 500)
     })
   }, [])
