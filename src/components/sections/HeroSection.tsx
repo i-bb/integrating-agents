@@ -1,5 +1,18 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { LockScreenDemo } from '../ui/LockScreenDemo'
+
+function useIsLargeScreen() {
+  const [isLarge, setIsLarge] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)')
+    setIsLarge(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsLarge(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isLarge
+}
 
 interface HeroSectionProps {
   onContactClick: () => void
@@ -15,6 +28,7 @@ const stats = [
 
 export function HeroSection({ onContactClick }: HeroSectionProps) {
   const reduced = useReducedMotion()
+  const isLarge = useIsLargeScreen()
 
   const item = (delay: number) => ({
     initial: { opacity: 0, y: reduced ? 0 : 16 },
@@ -119,10 +133,12 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Right zone — phone lock screen demo */}
-        <div className="hero-right-zone" aria-hidden="true" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 'clamp(2rem, 4vh, 4rem)' }}>
-          <LockScreenDemo />
-        </div>
+        {/* Right zone — only mounted on large screens to avoid running animations on mobile */}
+        {isLarge && (
+          <div className="hero-right-zone" aria-hidden="true" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 'clamp(2rem, 4vh, 4rem)' }}>
+            <LockScreenDemo />
+          </div>
+        )}
       </div>
 
       <div className="hero-rule" aria-hidden="true" />
