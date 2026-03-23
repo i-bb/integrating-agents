@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
+import { AnimatedGridPattern } from './components/ui/AnimatedGridPattern'
 import { NavBar } from './components/sections/NavBar'
 import { HeroSection } from './components/sections/HeroSection'
 import { TrustStrip } from './components/sections/TrustStrip'
-import { ProblemSection } from './components/sections/ProblemSection'
 import { ServicesSection } from './components/sections/ServicesSection'
 import { ProcessSection } from './components/sections/ProcessSection'
 import { IndustriesSection } from './components/sections/IndustriesSection'
@@ -48,6 +48,24 @@ export default function App() {
 
   return (
     <div className="grid-texture">
+      <AnimatedGridPattern
+        width={48}
+        height={48}
+        numSquares={120}
+        maxOpacity={0.028}
+        duration={4}
+        repeatDelay={1.5}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+          width: '100%',
+          height: '100%',
+          color: 'oklch(35% 0.12 250)',
+          stroke: 'oklch(0% 0 0 / 0.025)',
+        }}
+      />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:text-sm focus:font-bold"
@@ -61,7 +79,6 @@ export default function App() {
       <main id="main-content">
         <HeroSection onContactClick={scrollToContact} />
         <TrustStrip />
-        <ProblemSection />
         <ServicesSection />
         <ProcessSection />
         <IndustriesSection />

@@ -92,8 +92,8 @@
    One rule governs every element on every screen size:
 
    CONTAINER
-     max-width: 1100px (comfortable reading/scanning line)
-     padding:   clamp(1rem, 6vw, 5rem)  — breathing room that
+     max-width: 2200px (fills all practical viewport sizes)
+     padding:   clamp(1rem, 5vw, 6rem)  — breathing room that
                 scales smoothly from mobile to ultrawide
 
    TYPOGRAPHY — 3-tier scale, each tier uses the same formula:
@@ -125,11 +125,11 @@
 
 .container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 2200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1rem, 6vw, 5rem);
-  padding-right: clamp(1rem, 6vw, 5rem);
+  padding-left: clamp(1rem, 5vw, 6rem);
+  padding-right: clamp(1rem, 5vw, 6rem);
 }
 
 /* ─── Section spacing ────────────────────────────────────────── */
@@ -178,18 +178,7 @@
 }
 
 /* ─── Grid texture ───────────────────────────────────────────── */
-
-.grid-texture::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, oklch(0% 0 0 / 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0% 0 0 / 0.025) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
+/* Static grid replaced by AnimatedGridPattern SVG in App.tsx */
 
 /* ─── Card shadow system ─────────────────────────────────────── */
 
@@ -222,12 +211,8 @@
 }
 
 .marquee-track {
-  animation: marquee 40s linear infinite;
+  animation: marquee 120s linear infinite;
   will-change: transform;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
 }
 
 /* ─── Gold underline (section use) ──────────────────────────── */

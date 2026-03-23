@@ -81,7 +81,7 @@ export function ServicesSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-16 items-start mb-12">
           <div>
-            <SectionLabel number="02" title="What we do" />
+            <SectionLabel number="01" title="What we do" />
             <AnimateIn>
               <h2
                 id="services-heading"
