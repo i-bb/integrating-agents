@@ -20,9 +20,9 @@ interface HeroSectionProps {
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-const stats = [
+const stats: { value: string; label: string; accent?: boolean }[] = [
   { value: 'No commitment', label: 'to get started' },
-  { value: 'No tech team', label: 'required — ever' },
+  { value: 'No tech team required', label: 'we handle the rest', accent: true },
   { value: 'Any industry', label: 'we work across all sectors' },
 ]
 
@@ -86,7 +86,7 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
           {/* Body */}
           <motion.p {...item(0.56)} className="hero-body">
             Whether you haven't started yet or you've tried and got nowhere —
-            Last Mile gets any business to real results from AI. No tech team.
+            Last Mile gets any business to real results from AI. No tech team required.
             No jargon.
           </motion.p>
 
@@ -126,7 +126,12 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
           >
             {stats.map(stat => (
               <div key={stat.value} className="hero-stat">
-                <span className="hero-stat-value">{stat.value}</span>
+                <span
+                  className="hero-stat-value"
+                  style={undefined}
+                >
+                  {stat.value}
+                </span>
                 <span className="hero-stat-label">{stat.label}</span>
               </div>
             ))}
