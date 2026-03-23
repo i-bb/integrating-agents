@@ -171,15 +171,14 @@ export function ServicesSection() {
                   </div>
 
                   {/* Expanded detail */}
-                  <div
+                  <motion.div
                     id={`service-${i}-detail`}
                     role="region"
                     aria-labelledby={`service-${i}-btn`}
-                    className="overflow-hidden transition-all duration-300"
-                    style={{
-                      maxHeight: active === i ? '600px' : '0',
-                      opacity: active === i ? 1 : 0,
-                    }}
+                    initial={false}
+                    animate={{ height: active === i ? 'auto' : 0, opacity: active === i ? 1 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ overflow: 'hidden' }}
                   >
                     <div
                       className="px-0 pb-8 pt-2"
@@ -236,7 +235,7 @@ export function ServicesSection() {
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </button>
               </StaggerItem>
             ))}
