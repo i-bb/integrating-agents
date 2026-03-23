@@ -2,6 +2,7 @@ import { AnimateIn, Stagger, StaggerItem } from '../ui/AnimateIn'
 import { SectionLabel } from '../ui/SectionLabel'
 
 const industries = [
+  { name: 'Marketing & Social Media', description: 'Automated content workflows, social scheduling, campaign reporting, and audience analysis.' },
   { name: 'Healthcare & Dental', description: 'Automate scheduling, billing, patient follow-ups, and insurance paperwork.' },
   { name: 'Retail & E-commerce', description: 'Smarter inventory, faster customer support, automated reordering.' },
   { name: 'Restaurants & Hospitality', description: 'Streamline reservations, staff scheduling, supplier orders, and reviews.' },
@@ -13,8 +14,6 @@ const industries = [
   { name: 'Education & Training', description: 'Personalized content, automated grading, scheduling, and enrollment.' },
   { name: 'Insurance', description: 'Claims processing, client communication, policy management, and renewals.' },
   { name: 'Manufacturing', description: 'Predictive maintenance, quality control, supply chain optimization.' },
-  { name: 'Marketing & Social Media', description: 'Automated content workflows, social scheduling, campaign reporting, and audience analysis.' },
-  { name: 'Any other industry', description: 'If your business runs on people and processes, we can almost certainly help.' },
 ]
 
 export function IndustriesSection() {
@@ -56,9 +55,9 @@ export function IndustriesSection() {
           <Stagger>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {industries.map((ind) => (
-                <StaggerItem key={ind.name}>
+                <StaggerItem key={ind.name} className="h-full">
                   <div
-                    className="industry-card p-5 flex flex-col gap-2"
+                    className="industry-card p-5 flex flex-col gap-2 h-full"
                     style={{
                       background: 'var(--color-surface)',
                       border: '1px solid var(--color-border)',

@@ -15,7 +15,7 @@ const testimonials = [
     industry: 'Marketing & Analytics',
   },
   {
-    quote: "We always prioritise in-person guest interactions — that's the heart of what we do. Last Mile took everything else off our plate. A voice concierge, a task management tool, the whole back-end coordination — it just runs. Requests come in, get assigned, get done. Our staff is less stressed and our guests notice, even if they can't put their finger on why.",
+    quote: "We always prioritise in-person guest interactions. That's the heart of what we do. Last Mile took everything else off our plate. A voice concierge, a task management tool, the whole back-end coordination. It just runs. Requests come in, get assigned, get done. Our staff is less stressed and our guests notice, even if they can't put their finger on why.",
     name: 'Director of Operations',
     company: 'Luxury Boutique Hotel, Soho NYC',
     industry: 'Hospitality — New York City',
