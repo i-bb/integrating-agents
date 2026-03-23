@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { IntegrationGrid } from '../ui/IntegrationGrid'
+import { LockScreenDemo } from '../ui/LockScreenDemo'
 
 interface HeroSectionProps {
   onContactClick: () => void
@@ -119,9 +119,9 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Right zone — integration grid animation */}
-        <div className="hero-right-zone" aria-hidden="true">
-          <IntegrationGrid />
+        {/* Right zone — phone lock screen demo */}
+        <div className="hero-right-zone" aria-hidden="true" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 'clamp(2rem, 4vh, 4rem)' }}>
+          <LockScreenDemo />
         </div>
       </div>
 
