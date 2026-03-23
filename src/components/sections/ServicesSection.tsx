@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { AnimateIn, Stagger, StaggerItem } from '../ui/AnimateIn'
 import { SectionLabel } from '../ui/SectionLabel'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 
 const services = [
   {
@@ -171,12 +171,16 @@ export function ServicesSection() {
                   </div>
 
                   {/* Expanded detail */}
+                  <AnimatePresence initial={false}>
+                  {active === i && (
                   <motion.div
                     id={`service-${i}-detail`}
                     role="region"
                     aria-labelledby={`service-${i}-btn`}
-                    initial={false}
-                    animate={{ height: active === i ? 'auto' : 0, opacity: active === i ? 1 : 0 }}
+                    key={`detail-${i}`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                     style={{ overflow: 'hidden' }}
                   >
@@ -236,6 +240,8 @@ export function ServicesSection() {
                       </div>
                     </div>
                   </motion.div>
+                  )}
+                  </AnimatePresence>
                 </button>
               </StaggerItem>
             ))}

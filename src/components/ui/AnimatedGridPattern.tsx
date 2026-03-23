@@ -89,32 +89,35 @@ export function AnimatedGridPattern({
 
   useEffect(() => {
     const element = containerRef.current
-    let resizeObserver: ResizeObserver | null = null
+    if (!element) return
 
-    if (element) {
-      resizeObserver = new ResizeObserver((entries) => {
+    // Seed dimensions immediately from the element's current size
+    const rect = element.getBoundingClientRect()
+    setDimensions({ width: rect.width, height: rect.height })
+
+    // Only update on genuine window resize — not mobile scroll bar show/hide
+    let debounceTimer: ReturnType<typeof setTimeout>
+    const resizeObserver = new ResizeObserver((entries) => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
         for (const entry of entries) {
-          setDimensions((currentDimensions) => {
-            const nextWidth = entry.contentRect.width
-            const nextHeight = entry.contentRect.height
-            if (
-              currentDimensions.width === nextWidth &&
-              currentDimensions.height === nextHeight
-            ) {
-              return currentDimensions
+          setDimensions((prev) => {
+            const nextW = Math.round(entry.contentRect.width)
+            const nextH = Math.round(entry.contentRect.height)
+            // Ignore height-only changes under 100px — these are mobile browser chrome toggling
+            if (Math.abs(nextW - prev.width) < 2 && Math.abs(nextH - prev.height) < 100) {
+              return prev
             }
-            return { width: nextWidth, height: nextHeight }
+            return { width: nextW, height: nextH }
           })
         }
-      })
+      }, 200)
+    })
 
-      resizeObserver.observe(element)
-    }
-
+    resizeObserver.observe(element)
     return () => {
-      if (resizeObserver) {
-        resizeObserver.disconnect()
-      }
+      clearTimeout(debounceTimer)
+      resizeObserver.disconnect()
     }
   }, [])
 

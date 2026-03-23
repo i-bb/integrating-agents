@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 const stats = [
   { value: 'No commitment', label: 'to get started' },
-  { value: 'No tech team', label: 'required' },
+  { value: 'No tech team', label: 'required — ever' },
   { value: 'Any industry', label: 'we work across all sectors' },
 ]
 
