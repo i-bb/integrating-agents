@@ -61,17 +61,22 @@ export function ProcessSection() {
 
         <Stagger>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 relative">
-            {/* Connecting line on desktop */}
+            {/* Connecting line on desktop — from center of circle 1 to center of circle 3 */}
             <div
-              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-px pointer-events-none"
-              style={{ background: 'var(--color-border-strong)' }}
+              className="hidden md:block absolute h-px pointer-events-none"
+              style={{
+                background: 'var(--color-border-strong)',
+                top: 'calc(2rem + 32px)',
+                left: 'calc(2rem + 32px)',
+                right: 'calc(2rem + 32px)',
+              }}
               aria-hidden="true"
             />
 
             {steps.map((step, i) => (
               <StaggerItem key={step.number}>
                 <div
-                  className="relative p-6 md:p-8 border-b md:border-b-0 md:border-r last:border-r-0"
+                  className="relative p-6 md:p-8 border-t border-b md:border-b-0 md:border-t-0 md:border-r last:border-r-0"
                   style={{ borderColor: 'var(--color-border-strong)' }}
                 >
                   {/* Step number circle */}
