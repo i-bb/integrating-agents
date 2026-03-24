@@ -90,32 +90,17 @@ export function NavBar({ onContactClick }: NavBarProps) {
               ))}
             </nav>
 
-            {/* CTA + mobile toggle */}
+            {/* CTA — always visible; replaces hamburger on mobile */}
             <div className="flex items-center gap-3">
               <button
                 onClick={onContactClick}
-                className="hidden sm:flex items-center gap-2 px-5 py-2.5 text-[13px] font-bold tracking-wide transition-all duration-200 card-pop card-pop-hover cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2.5 text-[13px] font-bold tracking-wide transition-all duration-200 card-pop card-pop-hover cursor-pointer"
                 style={{
                   background: 'var(--color-navy)',
                   color: 'var(--color-text-inverse)',
                 }}
               >
                 Let's talk →
-              </button>
-
-              {/* Mobile hamburger */}
-              <button
-                className="md:hidden w-10 h-10 flex items-center justify-center cursor-pointer"
-                style={{ color: 'var(--color-text)' }}
-                onClick={() => setMobileOpen(true)}
-                aria-label="Open menu"
-                aria-expanded={mobileOpen}
-              >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <line x1="3" y1="12" x2="21" y2="12"/>
-                  <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
               </button>
             </div>
           </div>
