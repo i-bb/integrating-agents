@@ -146,6 +146,7 @@ function NotificationTile({ n }: { n: Notification }) {
         cursor: 'pointer',
         transition: 'transform 0.2s ease',
       }}
+      onClick={() => { document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) }}
       onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.03)' }}
       onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)' }}
     >

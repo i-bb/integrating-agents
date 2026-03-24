@@ -30,7 +30,7 @@ export function IndustriesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
           {/* Left */}
           <div>
-            <SectionLabel number="04" title="Who we work with" />
+            <SectionLabel number="03" title="Who we work with" />
             <AnimateIn>
               <h2
                 id="industries-heading"

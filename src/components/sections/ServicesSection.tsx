@@ -133,13 +133,13 @@ export function ServicesSection() {
                     <div className="flex-shrink-0 w-28 md:w-36 pt-1">
                       <span
                         className="text-[11px] font-bold tracking-[0.18em] uppercase"
-                        style={{ color: active === i ? 'var(--color-navy)' : 'var(--color-text-muted)' }}
+                        style={{ color: active === i ? 'var(--color-navy)' : 'var(--color-text-secondary)' }}
                       >
                         {s.number}
                       </span>
                       <p
                         className="text-[11px] mt-1 tracking-[0.10em] uppercase font-semibold"
-                        style={{ color: active === i ? 'var(--color-gold)' : 'var(--color-text-muted)', opacity: active === i ? 1 : 0.7 }}
+                        style={{ color: active === i ? 'var(--color-gold)' : 'var(--color-text-secondary)', opacity: active === i ? 1 : 0.85 }}
                       >
                         {s.tagline}
                       </p>

@@ -50,7 +50,7 @@ export function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-start">
           {/* Left — persuasive copy */}
           <div>
-            <SectionLabel number="05" title="Let's talk" />
+            <SectionLabel number="04" title="Let's talk" />
             <AnimateIn>
               <h2
                 id="contact-heading"

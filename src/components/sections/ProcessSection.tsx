@@ -37,7 +37,7 @@ export function ProcessSection() {
         <div className="section-divider mb-16" aria-hidden="true" />
 
         <div className="mb-12 md:mb-16">
-          <SectionLabel number="03" title="How it works" />
+          <SectionLabel number="02" title="How it works" />
           <AnimateIn>
             <h2
               id="process-heading"
