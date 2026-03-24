@@ -17,7 +17,7 @@ const RADIUS_V = (SCREEN_RADIUS / SCREEN_HEIGHT) * 100
 
 // Light/neutral colors — matches var(--color-bg) screen content
 const C_BODY   = 'oklch(78% 0.005 80)'   // phone outer body — light grey
-const C_INNER  = 'oklch(88% 0.005 80)'   // inner bezel — slightly lighter
+const C_INNER  = 'oklch(93% 0.008 80)'   // inner bezel — matches site bg color
 const C_ISLAND = 'oklch(20% 0.02 250)'   // dynamic island — near-black
 const C_PILL   = 'oklch(30% 0.02 250)'   // island camera dot
 
@@ -32,11 +32,11 @@ export function IphoneMockup({ children, className, style, ...props }: IphoneMoc
       style={{ aspectRatio: `${PHONE_WIDTH}/${PHONE_HEIGHT}`, ...style }}
       {...props}
     >
-      {/* Screen content rendered inside the screen area */}
       {children && (
         <div
-          className="absolute z-10 overflow-hidden"
+          className="absolute overflow-hidden"
           style={{
+            zIndex: 10,
             left: `${LEFT_PCT}%`,
             top: `${TOP_PCT}%`,
             width: `${WIDTH_PCT}%`,

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
-import { AnimatedList } from './AnimatedList'
+import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { AnimatedListItem } from './AnimatedList'
+import { AnimatedGridPattern } from './AnimatedGridPattern'
 import { IphoneMockup } from './IphoneMockup'
 
-// Navy-on-white phone frame — matches bg color
 const IphoneMockupLight = (props: React.ComponentProps<typeof IphoneMockup>) => (
   <IphoneMockup {...props} />
 )
@@ -34,12 +35,14 @@ type Notification = {
   body: string
 }
 
+// Array ordered oldest→newest. AnimatedList reveals in order and reverses display,
+// so n11 (now) always appears at the top as the latest item.
 const notifications: Notification[] = [
   {
     key: 'n1',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: 'now',
+    time: '10m ago',
     title: 'Campaign brief received',
     body: 'Q2 product launch — analysing audience segments across 6 channels.',
   },
@@ -47,7 +50,7 @@ const notifications: Notification[] = [
     key: 'n2',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '45s ago',
+    time: '9m ago',
     title: 'Top segments identified',
     body: '3 high-intent cohorts found. 28–40 SaaS buyers converting 3.2× above average.',
   },
@@ -55,7 +58,7 @@ const notifications: Notification[] = [
     key: 'n3',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '2m ago',
+    time: '8m ago',
     title: 'Competitor ads pulled',
     body: 'Scraped 47 active ads from 4 competitors. Identifying messaging gaps.',
   },
@@ -63,7 +66,7 @@ const notifications: Notification[] = [
     key: 'n4',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '3m ago',
+    time: '7m ago',
     title: 'Copy angles drafted',
     body: '5 ad variants written per channel. Pain-led hooks outperform feature-led by 2.1×.',
   },
@@ -71,7 +74,7 @@ const notifications: Notification[] = [
     key: 'n5',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '4m ago',
+    time: '6m ago',
     title: 'Landing page analysed',
     body: 'CTA placement, headline clarity and load speed reviewed. 3 quick wins flagged.',
   },
@@ -87,31 +90,39 @@ const notifications: Notification[] = [
     key: 'n7',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '6m ago',
+    time: '4m ago',
     title: 'Campaign package ready',
     body: 'Ads, landing copy, email flow and budget split — ready for your review.',
   },
   {
     key: 'n8',
-    app: 'Mail',
-    icon: 'mail',
-    time: '7m ago',
-    title: 'R. Osei — Growth Lead',
-    body: 'Just reviewed the brief. These hooks are sharper than anything we\'ve written internally. Launching tomorrow.',
+    app: 'Last Mile',
+    icon: 'lastmile',
+    time: '3m ago',
+    title: 'Email drafted and sent',
+    body: 'Campaign summary sent to C. Walsh (Marketing Director) and R. Osei (Growth Lead) with full brief attached.',
   },
   {
     key: 'n9',
+    app: 'Mail',
+    icon: 'mail',
+    time: '2m ago',
+    title: 'R. Osei — Growth Lead',
+    body: 'Just reviewed the brief you sent. These hooks are sharper than anything we\'ve written internally. Launching tomorrow.',
+  },
+  {
+    key: 'n10',
     app: 'Last Mile',
     icon: 'lastmile',
-    time: '8m ago',
+    time: '1m ago',
     title: 'Launch day performance',
     body: 'CTR up 41% vs last quarter. Cost-per-lead down $18. Best opening day this year.',
   },
   {
-    key: 'n10',
+    key: 'n11',
     app: 'Mail',
     icon: 'mail',
-    time: '9m ago',
+    time: 'now',
     title: 'C. Walsh — Marketing Director',
     body: 'We\'ve been trying to crack this segment for 6 months. It did it overnight. What else can we give it?',
   },
@@ -121,8 +132,10 @@ function NotificationTile({ n }: { n: Notification }) {
   return (
     <div
       style={{
-        background: 'white',
-        boxShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.05)',
+        background: 'rgba(255,255,255,0.72)',
+        backdropFilter: 'blur(24px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+        boxShadow: '0 0 0 0.5px rgba(255,255,255,0.6), 0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)',
         borderRadius: '14px',
         padding: '9px 11px',
         display: 'flex',
@@ -144,14 +157,14 @@ function NotificationTile({ n }: { n: Notification }) {
           <span style={{ fontSize: '10px', fontWeight: 600, color: 'oklch(35% 0.12 250)', letterSpacing: '0.01em', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
             {n.app}
           </span>
-          <span style={{ fontSize: '9px', color: 'oklch(62% 0.008 250)', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', flexShrink: 0, marginLeft: '6px' }}>
+          <span style={{ fontSize: '9px', color: 'oklch(55% 0.008 250)', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', flexShrink: 0, marginLeft: '6px' }}>
             {n.time}
           </span>
         </div>
-        <div style={{ fontSize: '11px', fontWeight: 600, color: 'oklch(14% 0.012 250)', lineHeight: 1.3, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', marginBottom: '2px' }}>
+        <div style={{ fontSize: '11px', fontWeight: 600, color: 'oklch(12% 0.012 250)', lineHeight: 1.3, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', marginBottom: '2px' }}>
           {n.title}
         </div>
-        <div style={{ fontSize: '10px', color: 'oklch(44% 0.010 250)', lineHeight: 1.4, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+        <div style={{ fontSize: '10px', color: 'oklch(38% 0.010 250)', lineHeight: 1.4, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
           {n.body}
         </div>
       </div>
@@ -178,7 +191,7 @@ function SystemClock() {
     <div style={{ textAlign: 'center', paddingTop: '48px', paddingBottom: '12px' }}>
       <div style={{ fontSize: '56px', fontWeight: 200, color: 'oklch(14% 0.012 250)', letterSpacing: '-0.03em', lineHeight: 1, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
         {h12}:{m}
-        <span style={{ fontSize: '22px', fontWeight: 300, marginLeft: '6px', opacity: 0.5 }}>{ampm}</span>
+        <span style={{ fontSize: '22px', fontWeight: 300, marginLeft: '6px', opacity: 0.45 }}>{ampm}</span>
       </div>
       <div style={{ fontSize: '13px', color: 'oklch(44% 0.010 250)', marginTop: '6px', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
         {dayName}, {monthDay}
@@ -188,30 +201,62 @@ function SystemClock() {
 }
 
 function LockScreen() {
+  const DELAY = 1400
+  const [revealedIndex, setRevealedIndex] = useState(0)
+
+  useEffect(() => {
+    if (revealedIndex >= notifications.length - 1) return
+    const t = setTimeout(() => setRevealedIndex((i) => i + 1), DELAY)
+    return () => clearTimeout(t)
+  }, [revealedIndex])
+
+  const itemsToShow = useMemo(
+    () => notifications.slice(0, revealedIndex + 1).reverse(),
+    [revealedIndex]
+  )
+
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        background: 'oklch(93% 0.008 80)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        position: 'relative',
-      }}
-    >
-      <SystemClock />
-
-      <div style={{ flex: 1, overflowY: 'hidden', padding: '0 8px', display: 'flex', flexDirection: 'column' }}>
-        <AnimatedList delay={1400}>
-          {notifications.map((n) => (
-            <NotificationTile key={n.key} n={n} />
-          ))}
-        </AnimatedList>
-      </div>
-
-      <div style={{ padding: '10px 0 18px', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '100px', height: '4px', borderRadius: '2px', background: 'oklch(0% 0 0 / 0.15)' }} />
+    <div style={{ width: '100%', height: '100%', background: 'oklch(93% 0.008 80)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
+      <AnimatedGridPattern
+        width={48}
+        height={48}
+        numSquares={30}
+        maxOpacity={0.028}
+        duration={4}
+        repeatDelay={1.5}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', color: 'oklch(35% 0.12 250)' }}
+      />
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+        <SystemClock />
+        <div style={{ flex: 1, overflowY: 'hidden', padding: '0 8px', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex flex-col items-center gap-2">
+            <AnimatePresence>
+              {itemsToShow.map((n, displayIdx) => {
+                // displayIdx 0 = top (newest). Each step down = ~30s older.
+                let time: string
+                if (displayIdx === 0) time = 'now'
+                else if (displayIdx === 1) time = '30s ago'
+                else if (displayIdx === 2) time = '1m ago'
+                else if (displayIdx === 3) time = '2m ago'
+                else if (displayIdx === 4) time = '3m ago'
+                else if (displayIdx === 5) time = '4m ago'
+                else if (displayIdx === 6) time = '5m ago'
+                else if (displayIdx === 7) time = '6m ago'
+                else if (displayIdx === 8) time = '7m ago'
+                else if (displayIdx === 9) time = '8m ago'
+                else time = `${displayIdx}m ago`
+                return (
+                  <AnimatedListItem key={n.key}>
+                    <NotificationTile n={{ ...n, time }} />
+                  </AnimatedListItem>
+                )
+              })}
+            </AnimatePresence>
+          </div>
+        </div>
+        <div style={{ padding: '10px 0 18px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100px', height: '4px', borderRadius: '2px', background: 'oklch(0% 0 0 / 0.15)' }} />
+        </div>
       </div>
     </div>
   )
@@ -227,11 +272,12 @@ export function LockScreenDemo() {
       style={{
         marginLeft: '-2rem',
         display: 'inline-block',
+        position: 'relative',
+        padding: '16px 16px 0 16px',
         background: 'var(--color-navy)',
         border: '1px solid oklch(0% 0 0 / 0.10)',
         borderRight: '5px solid oklch(0% 0 0 / 0.35)',
         borderBottom: '5px solid oklch(0% 0 0 / 0.35)',
-        padding: '16px 16px 0 16px',
         boxShadow: '12px 12px 0 0 oklch(0% 0 0 / 0.28), 0 20px 60px oklch(0% 0 0 / 0.22), 0 4px 16px oklch(0% 0 0 / 0.12)',
       }}
     >

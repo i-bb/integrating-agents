@@ -525,9 +525,14 @@
 /* ─── Stats ──────────────────────────────────────────────────── */
 
 .hero-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1rem, 0.6rem + 1.2vw, 2.5rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.75rem, 0.6rem + 1.2vw, 2.5rem);
+}
+
+/* Third stat spans full width on mobile so it sits centred below the two */
+.hero-stat:last-child {
+  grid-column: 1 / -1;
 }
 
 .hero-stat {
@@ -535,6 +540,15 @@
   flex-direction: column;
   padding-left: clamp(0.75rem, 0.5rem + 0.5vw, 1.25rem);
   border-left: 2px solid var(--color-border-strong);
+}
+
+@media (min-width: 640px) {
+  .hero-stats {
+    grid-template-columns: repeat(3, auto);
+  }
+  .hero-stat:last-child {
+    grid-column: auto;
+  }
 }
 
 .hero-stat-value {
