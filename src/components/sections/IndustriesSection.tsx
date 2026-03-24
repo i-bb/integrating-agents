@@ -3,12 +3,12 @@ import { SectionLabel } from '../ui/SectionLabel'
 
 const industries = [
   { name: 'Marketing & Social Media', description: 'Automated content workflows, social scheduling, campaign reporting, and audience analysis.' },
-  { name: 'Healthcare & Dental', description: 'Automate scheduling, billing, patient follow-ups, and insurance paperwork.' },
+  { name: 'Finance & Accounting', description: 'Automated reporting, reconciliation, client communication, and compliance.' },
   { name: 'Retail & E-commerce', description: 'Smarter inventory, faster customer support, automated reordering.' },
   { name: 'Restaurants & Hospitality', description: 'Streamline reservations, staff scheduling, supplier orders, and reviews.' },
   { name: 'Professional Services', description: 'Automate client onboarding, proposals, invoicing, and follow-ups.' },
   { name: 'Real Estate', description: 'AI-powered listings, lead follow-up, document prep, and market analysis.' },
-  { name: 'Finance & Accounting', description: 'Automated reporting, reconciliation, client communication, and compliance.' },
+  { name: 'Healthcare & Dental', description: 'Automate scheduling, billing, patient follow-ups, and insurance paperwork.' },
   { name: 'Construction & Trades', description: 'Simplify quoting, scheduling, subcontractor comms, and job tracking.' },
   { name: 'Legal & Compliance', description: 'Draft documents, review contracts, manage deadlines, and client intake.' },
   { name: 'Education & Training', description: 'Personalized content, automated grading, scheduling, and enrollment.' },
