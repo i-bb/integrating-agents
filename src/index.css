@@ -527,12 +527,7 @@
 .hero-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(0.75rem, 0.6rem + 1.2vw, 2.5rem);
-}
-
-/* Third stat spans full width on mobile so it sits centred below the two */
-.hero-stat:last-child {
-  grid-column: 1 / -1;
+  gap: clamp(0.75rem, 0.6rem + 1.2vw, 2rem);
 }
 
 .hero-stat {
@@ -542,12 +537,10 @@
   border-left: 2px solid var(--color-border-strong);
 }
 
-@media (min-width: 640px) {
+/* 4-in-a-row only when there is genuinely enough room */
+@media (min-width: 900px) {
   .hero-stats {
-    grid-template-columns: repeat(3, auto);
-  }
-  .hero-stat:last-child {
-    grid-column: auto;
+    grid-template-columns: repeat(4, auto);
   }
 }
 

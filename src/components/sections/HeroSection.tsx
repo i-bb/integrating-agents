@@ -24,6 +24,7 @@ const stats: { value: string; label: string; accent?: boolean }[] = [
   { value: 'No commitment', label: 'to get started' },
   { value: 'No tech team required', label: 'we handle the rest', accent: true },
   { value: 'Any industry', label: 'we work across all sectors' },
+  { value: 'Real results', label: 'not just a proof of concept' },
 ]
 
 export function HeroSection({ onContactClick }: HeroSectionProps) {
